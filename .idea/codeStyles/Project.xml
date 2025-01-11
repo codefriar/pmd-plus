@@ -1,0 +1,30 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <ApexCodeStyleSettings>
+      <option name="ALIGN_MULTILINE_COMPOSITE_EXPRESSIONS" value="true" />
+      <option name="USAGE_CASE_APEX_CHANGE_CASE_WHEN_FORMATTING" value="true" />
+      <option name="KEYWORD_CASE_APEX_CHANGE_CASE_WHEN_FORMATTING" value="true" />
+      <option name="KEYWORD_CASE_SOQL_SOSL_CHANGE_CASE_WHEN_FORMATTING" value="true" />
+      <option name="KEYWORD_CASE_VISUALFORCE_CHANGE_CASE_WHEN_FORMATTING" value="true" />
+      <option name="KEYWORD_CASE_AURA_CHANGE_CASE_WHEN_FORMATTING" value="true" />
+      <option name="APEX_DOC_REFORMAT_APEX_DOC" value="true" />
+      <option name="APEX_DOC_REQUIRE_DESCRIPTION_TAG" value="true" />
+    </ApexCodeStyleSettings>
+    <JSCodeStyleSettings version="0">
+      <option name="FORCE_SEMICOLON_STYLE" value="true" />
+    </JSCodeStyleSettings>
+    <codeStyleSettings language="Apex">
+      <indentOptions>
+        <option name="USE_TAB_CHARACTER" value="true" />
+        <option name="SMART_TABS" value="true" />
+        <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="JavaScript">
+      <option name="IF_BRACE_FORCE" value="3" />
+      <option name="DOWHILE_BRACE_FORCE" value="3" />
+      <option name="WHILE_BRACE_FORCE" value="3" />
+      <option name="FOR_BRACE_FORCE" value="3" />
+    </codeStyleSettings>
+  </code_scheme>
+</component>
