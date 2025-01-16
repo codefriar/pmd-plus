@@ -1,14 +1,9 @@
 import * as vscode from 'vscode';
-import *  as ChildProcess from 'node:child_process';
-import * as path from 'path';
 import { Configuration } from './configuration';
-import * as OS from 'node:os';
 import { Utilities } from './utilities';
 import { UIUpdater } from './UIUpdater';
-import * as fs from 'node:fs';
 import { ShellExecution } from './shellExecution';
 import { PmdCSVResultParser } from './pmdCSVResultParser';
-//import { fileExists, dirExists } from './utils';
 
 export class PmdPlus {
     /// Private properties
@@ -25,7 +20,6 @@ export class PmdPlus {
         this.csvResultParser = new PmdCSVResultParser(outputChannelName, incomingConfig);
         this.rulesets = this.getValidRulesetPaths(this.configuration.rulesets);
         this.shellExecutor = new ShellExecution(this.configuration, this.rulesets, this.outputChannel);
-
     }
 
     public updateConfiguration(config: Configuration) {
@@ -48,7 +42,7 @@ export class PmdPlus {
         }
 
         /// Start the console logging with an note on the file being analyzed and update the UI to show that PMD is running.
-        this.outputChannel.appendLine(` ================== Starting PMD analysis of ${targetFile} ================== `);
+        this.outputChannel.appendLine(` ================== Starting PMD+ analysis of ${targetFile} ================== `);
         UIUpdater.getInstance().thinking();
 
         /// Setup the cancellation token
@@ -76,6 +70,7 @@ export class PmdPlus {
                     try{
                         const fileURI = vscode.Uri.file(filename);
                         const sourceCodeFile = await vscode.workspace.openTextDocument(fileURI);
+                        /// it's not clear to me why this can't be done in the original loop.
                         for(const problem of problems){
                             const line = sourceCodeFile.lineAt(problem.range.start.line);
                             problem.range = new vscode.Range(new vscode.Position(line.range.start.line, line.firstNonWhitespaceCharacterIndex), line.range.end);
@@ -95,6 +90,10 @@ export class PmdPlus {
             collection.delete(fileURI);
             UIUpdater.getInstance().ok();
         }
+    }
+
+    public getRulesets(): string[] {
+        return this.rulesets;
     }
 
     /// private helper methods

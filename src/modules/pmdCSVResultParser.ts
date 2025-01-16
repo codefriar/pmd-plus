@@ -1,4 +1,4 @@
-import * as csvParse from 'csv-parse/lib/sync';
+import * as csvParser from 'csv-parse';
 import { Options } from 'csv-parse';
 import { Configuration } from './configuration';
 import * as vscode from 'vscode';
@@ -67,7 +67,7 @@ export class PmdCSVResultParser {
             relax_column_count: true,
         };
         try {
-            results = csvParse.parse(resultsCSV, parserOptions);
+            results = csvParser.parse(resultsCSV, parserOptions);
         } catch (error) {
             throw new Error(`Failed to parse PMD results: ${error}`);
         }

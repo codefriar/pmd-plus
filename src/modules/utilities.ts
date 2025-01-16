@@ -1,7 +1,14 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'path';
+import * as vscode from 'vscode';
 
 export class Utilities {
+
+    public static getWorkspacePath(): string {
+        const workspace = vscode.workspace;
+        const knownRootPath = workspace && workspace.workspaceFolders && workspace.workspaceFolders.length > 0;
+        return knownRootPath ? workspace?.workspaceFolders[0].uri.fsPath : '';
+    }
 
     public static async fileExists(path: string): Promise<boolean> {
         let statObj;
