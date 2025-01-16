@@ -76,46 +76,46 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
-	/// File changed event
-	if(configuration.runPmdOnFileChange){
-		vscode.workspace.onDidChangeTextDocument(async () => {
-			debounce(async (event: vscode.TextDocumentChangeEvent) => {
-				if(isLangSupported(event.document.languageId)){
-					await pmdPlus.runPMD(event.document.fileName, diagnosticCollection);
-				}
-			});
-		});
-	}
+    /// File changed event
+    if (configuration.runPmdOnFileChange) {
+        vscode.workspace.onDidChangeTextDocument(async () => {
+            debounce(async (event: vscode.TextDocumentChangeEvent) => {
+                if (isLangSupported(event.document.languageId)) {
+                    await pmdPlus.runPMD(event.document.fileName, diagnosticCollection);
+                }
+            });
+        });
+    }
 
-	/// File Open Event
-	if(configuration.runPmdOnFileOpen){
-		vscode.window.onDidChangeActiveTextEditor(async (editor) => {
-			if(editor && isLangSupported(editor.document.languageId)){
-				await pmdPlus.runPMD(editor.document.fileName, diagnosticCollection);
-			}
-		});
-	}
+    /// File Open Event
+    if (configuration.runPmdOnFileOpen) {
+        vscode.window.onDidChangeActiveTextEditor(async (editor) => {
+            if (editor && isLangSupported(editor.document.languageId)) {
+                await pmdPlus.runPMD(editor.document.fileName, diagnosticCollection);
+            }
+        });
+    }
 
-	/// Configuration change event
-	vscode.workspace.onDidChangeConfiguration(async (event: vscode.ConfigurationChangeEvent) => {
-		if(event.affectsConfiguration(settingsNamespace)){
-			configuration = new Configuration(context);
-		}
-	});
+    /// Configuration change event
+    vscode.workspace.onDidChangeConfiguration(async (event: vscode.ConfigurationChangeEvent) => {
+        if (event.affectsConfiguration(settingsNamespace)) {
+            configuration = new Configuration(context);
+        }
+    });
 
-	/// Visible editor tab change event
-	context.subscriptions.push(
-		vscode.window.onDidChangeActiveTextEditor((editor) => {
-			if (editor) {
-				const isSupportedLanguage = (languageId: string) => supportedLanguages.includes(languageId);
-				if (isSupportedLanguage(editor.document.languageId)) {
-					UIUpdater.getInstance().show();
-				} else {
-					UIUpdater.getInstance().hide();
-				}
-			}
-		})
-	);
+    /// Visible editor tab change event
+    context.subscriptions.push(
+        vscode.window.onDidChangeActiveTextEditor((editor) => {
+            if (editor) {
+                const isSupportedLanguage = (languageId: string) => supportedLanguages.includes(languageId);
+                if (isSupportedLanguage(editor.document.languageId)) {
+                    UIUpdater.getInstance().show();
+                } else {
+                    UIUpdater.getInstance().hide();
+                }
+            }
+        })
+    );
 }
 
 // This method is called when your extension is deactivated

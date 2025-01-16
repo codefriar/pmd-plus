@@ -3,7 +3,6 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 
 export class Utilities {
-
     public static getWorkspacePath(): string {
         const workspace = vscode.workspace;
         const knownRootPath = workspace && workspace.workspaceFolders && workspace.workspaceFolders.length > 0;
@@ -13,7 +12,7 @@ export class Utilities {
     public static async fileExists(path: string): Promise<boolean> {
         let statObj;
         try {
-            const stats = await fs.stat(path);       
+            const stats = await fs.stat(path);
             return stats.isFile();
         } catch (err) {
             return false;
@@ -23,7 +22,7 @@ export class Utilities {
     public static async dirExists(path: string): Promise<boolean> {
         let statObj;
         try {
-            const stats = await fs.stat(path);       
+            const stats = await fs.stat(path);
             return stats.isDirectory();
         } catch (err) {
             return false;
@@ -36,15 +35,10 @@ export class Utilities {
             const content = await fs.readFile(workspacePath, 'utf8');
             return content
                 .split('\n')
-                .map(line => line.trim())
-                .filter(line => 
-                    line !== '' && 
-                    !line.startsWith('#') && 
-                    !line.startsWith('!')
-                );
+                .map((line) => line.trim())
+                .filter((line) => line !== '' && !line.startsWith('#') && !line.startsWith('!'));
         } catch (err) {
             return [];
         }
     }
-
 }

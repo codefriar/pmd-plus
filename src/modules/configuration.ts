@@ -1,6 +1,10 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 
+/**
+ * @description This class is responsible for handling the configuration of the extension.
+ * @class Configuration
+ */
 export class Configuration {
     /// private property for extension context
     private context!: vscode.ExtensionContext;
@@ -33,6 +37,10 @@ export class Configuration {
     /// Shell configuration
     public commandBufferSize: number = this.#configFromVSCodeSettings.get('commandBufferSize', 64);
 
+    /**
+     * @description Responsible for constructing a Configuration instance with proper configuration.
+     * @param context The extension context.
+     */
     constructor(context: vscode.ExtensionContext) {
         if (context) {
             this.context = context;
@@ -44,36 +52,42 @@ export class Configuration {
         }
     }
 
-
     /// Helper Methods
+    /**
+     * @description This method is responsible for resolving the PMD and JRE paths.
+     */
     private resolvePMDAndJREPaths() {
-        
-
-        if(!this.pathToPmdExecutable){
+        if (!this.pathToPmdExecutable) {
             this.pathToPmdExecutable = this.context.asAbsolutePath(path.join('bin', 'pmd'));
         }
 
-        if(this.pathToPmdExecutable && !path.isAbsolute(this.pathToPmdExecutable) && this.workspacePath){
+        if (this.pathToPmdExecutable && !path.isAbsolute(this.pathToPmdExecutable) && this.workspacePath) {
             this.pathToPmdExecutable = path.join(this.workspacePath, this.pathToPmdExecutable);
         }
 
-        if(this.jrePath && !path.isAbsolute(this.jrePath) && this.workspacePath){
+        if (this.jrePath && !path.isAbsolute(this.jrePath) && this.workspacePath) {
             this.jrePath = path.join(this.workspacePath, this.jrePath);
         }
     }
 
-    private resolveAdditionalClassPaths(){
+    /**
+     * @description This method is responsible for resolving the additional class paths.
+     */
+    private resolveAdditionalClassPaths() {
         this.additionalClassPaths = this.additionalClassPaths.map((classPath) => {
-            if(!path.isAbsolute(classPath) && this.workspacePath){
+            if (!path.isAbsolute(classPath) && this.workspacePath) {
                 return path.join(this.workspacePath, classPath);
             }
             return classPath;
         });
     }
 
-    private resolveRulesetPaths(){
+    /**
+     * @description This method is responsible for resolving the ruleset paths.
+     */
+    private resolveRulesetPaths() {
         this.rulesets = this.rulesets.map((rulesetPath) => {
-            if(rulesetPath.toLocaleLowerCase() === 'default'){
+            if (rulesetPath.toLocaleLowerCase() === 'default') {
                 return this.context.asAbsolutePath(path.join('rulesets', 'apex_ruleset.xml'));
             } else if (!path.isAbsolute(rulesetPath) && this.workspacePath) {
                 return path.join(this.workspacePath, rulesetPath);
@@ -81,11 +95,15 @@ export class Configuration {
             return rulesetPath;
         });
 
-        if(this.rulesets.length === 0){
+        if (this.rulesets.length === 0) {
             this.rulesets.push(path.join(this.workspacePath, 'rulesets', 'apex_ruleset.xml'));
         }
     }
 
+    /**
+     * @description This method is responsible for returning the workspace path.
+     * @returns string
+     */
     private getWorkspacePath() {
         const workspace = vscode.workspace;
         const knownRootPath = workspace && workspace.workspaceFolders && workspace.workspaceFolders.length > 0;

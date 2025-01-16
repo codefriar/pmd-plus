@@ -1,4 +1,4 @@
-interface PmdResult {
+export interface PmdResult {
     problem: string;
     package: string;
     file: string;
