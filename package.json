@@ -1,6 +1,6 @@
 {
     "name": "pmd-plus",
-    "displayName": "PMD Plus",
+    "displayName": "PMD+",
     "description": "Static Code Analysis for Salesforce Projects' Apex, Visualforce, Aura, and LWC (Html)",
     "version": "1.0.0",
     "publisher": "Codefriar",
@@ -41,22 +41,22 @@
             {
                 "command": "pmd-plus.SCAWorkspace",
                 "title": "Run Static Code Analysis (pmd) on this Workspace",
-                "category": "PMD Plus"
+                "category": "PMD+"
             },
             {
                 "command": "pmd-plus.SCAFile",
                 "title": "Run Static Code Analysis (pmd) on this File",
-                "category": "PMD Plus"
+                "category": "PMD+"
             },
             {
                 "command": "pmd-plus.clearKnownSCAIssues",
                 "title": "Clear Known Static Code Analysis Issues",
-                "category": "PMD Plus"
+                "category": "PMD+"
             },
             {
                 "command": "pmd-plus.SCAFileViaMenu",
-                "title": "Run Static Code Analysis (pmd) on this File",
-                "category": "PMD Plus"
+                "title": "PMD+ Run Static Code Analysis (pmd) on this File",
+                "category": "PMD+"
             }
         ],
         "languages": [
@@ -168,14 +168,14 @@
             "explorer/context": [
                 {
                     "when": "resourceLangId == 'apex' || resourceLangId == 'visualforce' || resourceLangId == 'xml' || resourceLangId == 'html'",
-                    "command": "pmd-plus.runFileMenu",
+                    "command": "pmd-plus.SCAFileViaMenu",
                     "group": "pmd-plus"
                 }
             ],
             "editor/context": [
                 {
                     "when": "resourceLangId == 'apex' || resourceLangId == 'visualforce' || resourceLangId == 'xml' || resourceLangId == 'html'",
-                    "command": "pmd-plus.runFileMenu",
+                    "command": "pmd-plus.SCAFileViaMenu",
                     "group": "pmd-plus"
                 }
             ]

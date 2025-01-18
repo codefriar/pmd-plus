@@ -6,8 +6,22 @@ import * as path from 'path';
  * @class Configuration
  */
 export class Configuration {
+    /**
+     * @description Responsible for constructing a Configuration instance with proper configuration.
+     * @param context The extension context.
+     */
+    public constructor(context: vscode.ExtensionContext) {
+        this.context = context;
+        this.resolvePMDAndJREPaths();
+        this.resolveAdditionalClassPaths();
+        this.resolveRulesetPaths();
+        const pathToPmdExecutable = this.context.asAbsolutePath(path.join('bin', 'pmd'));
+        const configuredPathToPmdExecutable = this.#configFromVSCodeSettings.get('pathToPmdExecutable', '');
+        this.pathToPmdExecutable = configuredPathToPmdExecutable === '' ? pathToPmdExecutable : configuredPathToPmdExecutable;
+    }
+
     /// private property for extension context
-    private context!: vscode.ExtensionContext;
+    private context: vscode.ExtensionContext;
 
     /// Handle on user controlled settings from settings.json
     #configFromVSCodeSettings = vscode.workspace.getConfiguration('pmdPlus');
@@ -21,9 +35,9 @@ export class Configuration {
     public additionalClassPaths: string[] = this.#configFromVSCodeSettings.get('additionalClassPaths', []);
 
     /// Settings related to the PMD executable
-    public pathToPmdExecutable: string = this.#configFromVSCodeSettings.get('pathToPmdExecutable', '');
+    public pathToPmdExecutable: string;
     public enableCache: boolean = this.#configFromVSCodeSettings.get('enableCache', true);
-    public cachePath: string = `${this.workspacePath}/.pmdcache`;
+    public cachePath: string = path.join(this.workspacePath, '.pmdcache');
     public jrePath: string = this.#configFromVSCodeSettings.get('jrePath', '');
 
     /// Thresholds and triggers
@@ -36,21 +50,6 @@ export class Configuration {
 
     /// Shell configuration
     public commandBufferSize: number = this.#configFromVSCodeSettings.get('commandBufferSize', 64);
-
-    /**
-     * @description Responsible for constructing a Configuration instance with proper configuration.
-     * @param context The extension context.
-     */
-    constructor(context: vscode.ExtensionContext) {
-        if (context) {
-            this.context = context;
-            this.resolvePMDAndJREPaths();
-            this.resolveAdditionalClassPaths();
-            this.resolveRulesetPaths();
-        } else {
-            console.error('PmdPlus configuration missing context.');
-        }
-    }
 
     /// Helper Methods
     /**

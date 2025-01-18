@@ -10,7 +10,6 @@ export class Utilities {
     }
 
     public static async fileExists(path: string): Promise<boolean> {
-        let statObj;
         try {
             const stats = await fs.stat(path);
             return stats.isFile();
@@ -20,7 +19,6 @@ export class Utilities {
     }
 
     public static async dirExists(path: string): Promise<boolean> {
-        let statObj;
         try {
             const stats = await fs.stat(path);
             return stats.isDirectory();
@@ -32,7 +30,7 @@ export class Utilities {
     public static async readForceIgnoreFile(workspacePath: string, filename: string): Promise<string[]> {
         try {
             const ignoreFilePath = path.join(workspacePath, filename);
-            const content = await fs.readFile(workspacePath, 'utf8');
+            const content = await fs.readFile(ignoreFilePath, 'utf8');
             return content
                 .split('\n')
                 .map((line) => line.trim())

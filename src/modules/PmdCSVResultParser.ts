@@ -1,8 +1,8 @@
 import * as csvParser from 'csv-parse/sync';
 import { Options } from 'csv-parse';
-import { Configuration } from './configuration';
+import { Configuration } from './Configuration';
 import * as vscode from 'vscode';
-import { Utilities } from './utilities';
+import { Utilities } from './Utilities';
 import { PmdResult } from '../types';
 
 const FIELDS: (keyof PmdResult)[] = [
@@ -22,7 +22,7 @@ const FIELDS: (keyof PmdResult)[] = [
  */
 export class PmdCSVResultParser {
     private outputChannel: vscode.OutputChannel;
-    private configuration: Configuration;
+    private readonly configuration: Configuration;
 
     /**
      * @description Responsible for constructing a PmdCSVResultParser instance with proper configuration.
@@ -41,7 +41,7 @@ export class PmdCSVResultParser {
      */
     public async parse(resultsCSV: string): Promise<Map<string, Array<vscode.Diagnostic>>> {
         try {
-            const results = this.parseRawData(resultsCSV);
+            const results = this.parseStringIntoCSV(resultsCSV);
             const problemsMap = new Map<string, Array<vscode.Diagnostic>>();
             let countOfIssues = 0;
 
@@ -56,7 +56,7 @@ export class PmdCSVResultParser {
                     continue;
                 }
 
-                const problem = this.createDiagnostic(result);
+                const problem = await this.createDiagnostic(result);
                 if (!problem) {
                     continue;
                 }
@@ -81,7 +81,7 @@ export class PmdCSVResultParser {
      * @param resultsCSV The PMD results as a CSV string.
      * @returns PmdResult[]
      */
-    private parseRawData(resultsCSV: string): PmdResult[] {
+    private parseStringIntoCSV(resultsCSV: string): PmdResult[] {
         let results: PmdResult[] = [];
         const parserOptions: Options = {
             columns: FIELDS,
@@ -92,11 +92,11 @@ export class PmdCSVResultParser {
         try {
             results = csvParser.parse(resultsCSV, parserOptions) as PmdResult[];
         } catch (error) {
+            vscode.window.showWarningMessage(
+                `PMD+ failed to parse all the PMD violations found in the CSV, but found ${results.length} issues.`
+            );
             throw new Error(`Failed to parse PMD results: ${error}`);
         }
-        vscode.window.showWarningMessage(
-            `PMD+ failed to parse all the PMD violations found in the CSV, but found ${results.length} issues.`
-        );
         return results;
     }
 
@@ -125,13 +125,21 @@ export class PmdCSVResultParser {
      * @param result The PMD result to create a diagnostic for.
      * @returns vscode.Diagnostic
      */
-    private createDiagnostic(result: PmdResult): vscode.Diagnostic {
+    private async createDiagnostic(result: PmdResult): Promise<vscode.Diagnostic> {
         const violationOnLine = parseInt(result.line, 10) - 1;
         const problemUrl = this.generateURLToProblemDetails(result);
         const diagnosticMessage = `${result.description} (rule: ${result.rule})`;
 
+        const fileURI = vscode.Uri.file(result.file);
+        const sourceCodeFile = await vscode.workspace.openTextDocument(fileURI);
+        const lineContents = sourceCodeFile.lineAt(violationOnLine);
+
         const problem = new vscode.Diagnostic(
-            new vscode.Range(new vscode.Position(violationOnLine, 0), new vscode.Position(violationOnLine, 100)),
+            new vscode.Range(
+                new vscode.Position(lineContents.range.start.line, lineContents.firstNonWhitespaceCharacterIndex), lineContents.range.end
+                // the next line was the original code.
+                // new vscode.Position(violationOnLine, 0), new vscode.Position(violationOnLine, 100)
+            ),
             diagnosticMessage,
             this.calculateLevel(result)
         );

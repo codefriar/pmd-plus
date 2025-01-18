@@ -2,16 +2,16 @@ import * as vscode from 'vscode';
 
 /**
  * @description This class is responsible for updating the UI of the extension.
- * @class UIUpdater
+ * @class UserInterface
  */
-export class UIUpdater implements vscode.Disposable {
+export class UserInterface implements vscode.Disposable {
     /// constants
     private static readonly DEFAULT_COMMAND = 'workbench.actions.view.problems';
     private static readonly APP_THINKING_ICON = '$(sync~spin)';
     private static readonly APP_IS_OK_ICON = '$(check)';
     private static readonly APP_HAS_ERROR_ICON = '$(alert)';
 
-    private static instance: UIUpdater;
+    private static instance: UserInterface;
     private static appName: string;
     private pmdPlusStatusBar: vscode.StatusBarItem;
     private isHidden: boolean;
@@ -22,7 +22,7 @@ export class UIUpdater implements vscode.Disposable {
      * @returns string
      */
     static get thinkingMessage() {
-        return `${UIUpdater.APP_THINKING_ICON} ${UIUpdater.appName} is thinking...`;
+        return `${UserInterface.APP_THINKING_ICON} ${UserInterface.appName} is thinking...`;
     }
 
     /**
@@ -30,7 +30,7 @@ export class UIUpdater implements vscode.Disposable {
      * @returns string
      */
     static get errorMessage() {
-        return `${UIUpdater.APP_HAS_ERROR_ICON} ${UIUpdater.appName} has an error.`;
+        return `${UserInterface.APP_HAS_ERROR_ICON} ${UserInterface.appName} found error(s).`;
     }
 
     /**
@@ -38,7 +38,7 @@ export class UIUpdater implements vscode.Disposable {
      * @returns string
      */
     static get okMessage() {
-        return `${UIUpdater.APP_IS_OK_ICON} ${UIUpdater.appName} is OK.`;
+        return `${UserInterface.APP_IS_OK_ICON} ${UserInterface.appName} is OK.`;
     }
 
     /**
@@ -46,25 +46,18 @@ export class UIUpdater implements vscode.Disposable {
      * @param appName The name of the application.
      */
     static setAppName(appName: string) {
-        UIUpdater.appName = appName;
+        UserInterface.appName = appName;
     }
 
     /**
      * @description This method is responsible for returning the instance of the UIUpdater class.
-     * @returns UIUpdater
+     * @returns UserInterface
      */
     static getInstance() {
-        if (!UIUpdater.instance) {
-            UIUpdater.instance = new UIUpdater();
+        if (!UserInterface.instance) {
+            UserInterface.instance = new UserInterface();
         }
-        return UIUpdater.instance;
-    }
-    /**
-     * @description This method is responsible for creating a new instance of the UIUpdater class.
-     * @returns UIUpdater
-     */
-    static create(): UIUpdater {
-        return new UIUpdater();
+        return UserInterface.instance;
     }
 
     /// Instance methods
@@ -73,12 +66,11 @@ export class UIUpdater implements vscode.Disposable {
      */
     public constructor() {
         this.pmdPlusStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 5);
-        this.pmdPlusStatusBar.text = UIUpdater.okMessage;
-        this.pmdPlusStatusBar.command = UIUpdater.DEFAULT_COMMAND;
+        this.pmdPlusStatusBar.text = UserInterface.okMessage;
+        this.pmdPlusStatusBar.command = UserInterface.DEFAULT_COMMAND;
         this.pmdPlusStatusBar.show();
 
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) {
+        if (!vscode.window.activeTextEditor) {
             this.pmdPlusStatusBar.hide();
             this.isHidden = true;
         } else {
@@ -94,7 +86,7 @@ export class UIUpdater implements vscode.Disposable {
         if (!this.isHidden) {
             return;
         }
-        this.pmdPlusStatusBar.text = UIUpdater.okMessage;
+        this.pmdPlusStatusBar.text = UserInterface.okMessage;
         this.pmdPlusStatusBar.show();
         this.isHidden = false;
     }
@@ -111,35 +103,24 @@ export class UIUpdater implements vscode.Disposable {
     }
 
     /**
-     * @description toggles the status bar item
-     */
-    public toggle() {
-        if (this.isHidden) {
-            this.show();
-        } else {
-            this.hide();
-        }
-    }
-
-    /**
      * @description This method is responsible for updating the status bar with the thinking message.
      */
     public thinking() {
-        this.pmdPlusStatusBar.text = UIUpdater.thinkingMessage;
+        this.pmdPlusStatusBar.text = UserInterface.thinkingMessage;
     }
 
     /**
      * @description This method is responsible for updating the status bar with the error message.
      */
     public errors() {
-        this.pmdPlusStatusBar.text = UIUpdater.errorMessage;
+        this.pmdPlusStatusBar.text = UserInterface.errorMessage;
     }
 
     /**
      * @description This method is responsible for updating the status bar with the OK message.
      */
     public ok() {
-        this.pmdPlusStatusBar.text = UIUpdater.okMessage;
+        this.pmdPlusStatusBar.text = UserInterface.okMessage;
     }
 
     /**

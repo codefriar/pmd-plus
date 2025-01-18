@@ -1,9 +1,8 @@
-import { Configuration } from './configuration';
+import { Configuration } from './Configuration';
 import * as vscode from 'vscode';
 import * as ChildProcess from 'node:child_process';
 import * as path from 'path';
 import * as os from 'node:os';
-import { PmdCSVResultParser } from './pmdCSVResultParser';
 
 const CLASSPATH_DELIMINATOR = process.platform === 'win32' ? ';' : ':';
 
@@ -12,10 +11,9 @@ const CLASSPATH_DELIMINATOR = process.platform === 'win32' ? ';' : ':';
  * @class ShellExecution
  */
 export class ShellExecution {
-    private configuration: Configuration;
+    private readonly configuration: Configuration;
     private rulesets: string[] = [];
     private outputChannel: vscode.OutputChannel;
-    private pmdCSVResultParser: PmdCSVResultParser;
 
     /**
      * @description Responsible for constructing a ShellExecution instance with proper configuration.
@@ -27,7 +25,6 @@ export class ShellExecution {
         this.configuration = config;
         this.rulesets = validRulesets;
         this.outputChannel = outputChannel;
-        this.pmdCSVResultParser = new PmdCSVResultParser(outputChannel, config);
     }
 
     /**
@@ -40,7 +37,7 @@ export class ShellExecution {
         /// Build the command line arguments into a single string.
         const cliCommand = this.buildCommandLine(targetFile);
 
-        /// Setup additional classes, if any are configured.
+        /// Setup additional classes, if they are configured.
         const classPathArgument = this.buildClassPathArgument(
             this.configuration.workspacePath,
             this.configuration.additionalClassPaths
@@ -48,7 +45,7 @@ export class ShellExecution {
         let env: NodeJS.ProcessEnv = {};
         env['CLASSPATH'] = classPathArgument;
 
-        /// Setup the JRE, if a custom one is configured.
+        /// Set up the JRE, if a custom one is configured.
         if (this.configuration.jrePath) {
             if (os.platform() === 'win32') {
                 /// Windows is FSCKED and doesn't handle spaces in paths without quotes.
@@ -117,16 +114,6 @@ export class ShellExecution {
 
     /// Private Helper Methods
     /**
-     * @description This method is responsible for parsing the PMD results into a DiagnosticCollection for VSCode.
-     * @param pmdResultsAsCSV The PMD results as a CSV string.
-     * @returns Promise<Map<string, Array<vscode.Diagnostic>>>
-     */
-    private async parsePMDResults(pmdResultsAsCSV: string): Promise<Map<string, Array<vscode.Diagnostic>>> {
-        const parsedResults = await this.pmdCSVResultParser.parse(pmdResultsAsCSV);
-        return parsedResults;
-    }
-
-    /**
      * @description This method is responsible for building the command line arguments into a single string.
      * @param targetFile The file to run PMD on.
      * @returns string
@@ -134,14 +121,23 @@ export class ShellExecution {
     private buildCommandLine(targetFile: string): string {
         const { enableCache, cachePath, pathToPmdExecutable } = this.configuration;
 
-        const rulesetArgument = this.rulesets.join(',');
-        const cacheArgument = enableCache ? `--cache ${cachePath}` : '--no-cache';
+        const rulesetArgument = this.rulesets.map((ruleset) => this.escapePath(ruleset)).join(',');
+        const cacheArgument = enableCache ? `--cache ${this.escapePath(cachePath)}` : '--no-cache';
         const noProgressArgument = '--no-progress';
         const formatArgument = '--format csv';
-        const targetFileArgument = `-d ${targetFile}`;
+        const targetFileArgument = `-d ${this.escapePath(targetFile)}`;
         const rulesetsArgument = `-R ${rulesetArgument}`;
 
-        return `"${path.join(pathToPmdExecutable, 'bin', 'pmd')}" check${noProgressArgument} ${cacheArgument} ${formatArgument} ${targetFileArgument} ${rulesetsArgument}`;
+        return `"${path.join(pathToPmdExecutable, 'bin', 'pmd')}" check ${noProgressArgument} ${cacheArgument} ${formatArgument} ${targetFileArgument} ${rulesetsArgument}`;
+    }
+
+    /**
+     * @description This method is responsible for escaping a path for use in a command line.
+     * @param path The path to escape.
+     * @returns string
+     */
+    private escapePath(path: string): string {
+        return `"${path}"`;
     }
 
     /**

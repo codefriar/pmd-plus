@@ -3,10 +3,10 @@
 import * as vscode from 'vscode';
 
 /// Custom imports
-import { Configuration } from './modules/configuration';
-import { PmdPlus } from './modules/pmdplus';
-import { UIUpdater } from './modules/UIUpdater';
-import { Utilities } from './modules/utilities';
+import { Configuration } from './modules/Configuration';
+import { PmdPlus } from './modules/PmdPlus';
+import { UserInterface } from './modules/UserInterface';
+import { Utilities } from './modules/Utilities';
 import debounce from 'debounce';
 
 /// Extension wide constants
@@ -25,8 +25,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     /// instance variables
     const pmdPlus = new PmdPlus(outputChannel, configuration);
-    UIUpdater.setAppName(extensionName);
-    UIUpdater.getInstance().ok();
+    UserInterface.setAppName(extensionName);
+    UserInterface.getInstance().ok();
 
     /// Register the clear problems command
     context.subscriptions.push(
@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
 
-    /// Register the Run on File via Menu command
+    /// Register the Run-on File via Menu command
     context.subscriptions.push(
         vscode.commands.registerCommand('pmd-plus.SCAFileViaMenu', async (fileURI: vscode.Uri) => {
             await pmdPlus.runPMD(fileURI.fsPath, diagnosticCollection);
@@ -83,7 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
                 if (isLangSupported(event.document.languageId)) {
                     await pmdPlus.runPMD(event.document.fileName, diagnosticCollection);
                 }
-            });
+            }, configuration.onFileChangeDebounceTimeout);
         });
     }
 
@@ -109,9 +109,9 @@ export function activate(context: vscode.ExtensionContext) {
             if (editor) {
                 const isSupportedLanguage = (languageId: string) => supportedLanguages.includes(languageId);
                 if (isSupportedLanguage(editor.document.languageId)) {
-                    UIUpdater.getInstance().show();
+                    UserInterface.getInstance().show();
                 } else {
-                    UIUpdater.getInstance().hide();
+                    UserInterface.getInstance().hide();
                 }
             }
         })
