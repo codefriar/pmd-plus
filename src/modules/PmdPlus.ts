@@ -101,15 +101,6 @@ export class PmdPlus {
 
             try {
                 const fileURI = vscode.Uri.file(filename);
-                // const sourceCodeFile = await vscode.workspace.openTextDocument(fileURI);
-                // /// it's not clear to me why this can't be done in the original loop.
-                // for (const problem of problems) {
-                //     const line = sourceCodeFile.lineAt(problem.range.start.line);
-                //     problem.range = new vscode.Range(
-                //         new vscode.Position(line.range.start.line, line.firstNonWhitespaceCharacterIndex),
-                //         line.range.end
-                //     );
-                // }
                 collection.set(fileURI, problems);
             } catch (err) {
                 this.outputChannel.appendLine(`PMD+ encountered an error while processing the results: ${err}`);
