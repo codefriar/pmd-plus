@@ -19,7 +19,7 @@ export class ShellExecution {
      */
     constructor(
         private readonly configuration: Configuration,
-        private readonly rulesets: string[],
+        private readonly rulesets: ReadonlyArray<string>,
         private readonly outputChannel: vscode.OutputChannel
     ) {}
 

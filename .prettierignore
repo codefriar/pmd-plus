@@ -16,4 +16,4 @@ coverage/
 
 # ApexDox
 doc-assets/**/*.js
-docs/**/*.js
+docs/**/*.js/src/test/mocks/mockContext.ts

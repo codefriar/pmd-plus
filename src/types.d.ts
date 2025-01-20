@@ -1,3 +1,6 @@
+import { Configuration } from './modules/Configuration';
+import * as vscode from 'vscode';
+
 export interface PmdResult {
     problem: string;
     package: string;
@@ -8,3 +11,16 @@ export interface PmdResult {
     ruleSet: string;
     rule: string;
 }
+
+export interface PmdPlusConfiguration {
+    outputChannel: vscode.OutputChannel;
+    configuration: Configuration;
+    rulesets: string[];
+}
+
+export interface ProgressReport {
+    message?: string;
+    increment?: number;
+}
+
+export type PmdResults = Map<string, vscode.Diagnostic[]>;

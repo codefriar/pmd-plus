@@ -4,25 +4,45 @@ import { Utilities } from './Utilities';
 import { UserInterface } from './UserInterface';
 import { ShellExecution } from './ShellExecution';
 import { PmdCSVResultParser } from './PmdCSVResultParser';
+import { PmdResults, ProgressReport } from '../types';
+import { PmdConfigurationError } from './PmdConfigurationError';
 
 /**
  * @description this is the main extension class, responsible for orchestrating the execution of PMD, and parsing the results.
  * @class PmdPlus
  */
 export class PmdPlus {
-    /// Private properties
-    private readonly configuration: Configuration;
-    private rulesets: string[] = [];
-    private readonly outputChannel: vscode.OutputChannel;
+    // Private properties
+    private readonly rulesets: ReadonlyArray<string>;
+    private readonly ui = UserInterface.getInstance();
+    private readonly csvResultParser: PmdCSVResultParser;
+    private readonly shellExecutor: ShellExecution;
 
     /**
      * @description Responsible for constructing a PmdPlus instance with proper configuration.
-     * @param outputChannelName The channel name to use for log output
-     * @param incomingConfig Incoming configuration object
+     * @param outputChannel
+     * @param configuration
+     * @param initialRulesets
+     * @private
      */
-    public constructor(outputChannelName: vscode.OutputChannel, incomingConfig: Configuration) {
-        this.configuration = incomingConfig;
-        this.outputChannel = outputChannelName;
+    private constructor(
+        private readonly outputChannel: vscode.OutputChannel,
+        private readonly configuration: Configuration,
+        initialRulesets: string[]
+    ) {
+        this.rulesets = initialRulesets;
+        this.csvResultParser = new PmdCSVResultParser(this.outputChannel, this.configuration);
+        this.shellExecutor = new ShellExecution(this.configuration, this.rulesets, this.outputChannel);
+    }
+
+    /**
+     * @description Responsible for creating a PmdPlus instance with proper configuration.
+     * @param outputChannel
+     * @param configuration
+     */
+    public static async create(outputChannel: vscode.OutputChannel, configuration: Configuration): Promise<PmdPlus> {
+        const initialRulesets = await PmdPlus.getValidRulesetPaths(configuration.rulesets);
+        return new PmdPlus(outputChannel, configuration, initialRulesets);
     }
 
     /**
@@ -36,36 +56,26 @@ export class PmdPlus {
     public async runPMD(
         targetFile: string,
         collection: vscode.DiagnosticCollection,
-        progress?: vscode.Progress<{ message?: string; increment?: number }>,
-        token?: vscode.CancellationToken,
+        progress?: vscode.Progress<ProgressReport>,
+        token?: vscode.CancellationToken
     ): Promise<void> {
-        /// initialize and validate rulesets
-        await this.initializeRulesets();
-        const csvResultParser = new PmdCSVResultParser(this.outputChannel, this.configuration);
-        const shellExecutor = new ShellExecution(this.configuration, this.rulesets, this.outputChannel);
+        await this.validateConfiguration();
 
-        /// Guard against execution of this method when invalid configuration is found.
-        if (!(await this.pmdPathIsValid()) || !this.hasAtLeastOneValidRuleset()) {
-            return;
-        }
+        // Start the console logging with a note on the file being analyzed
+        // and update the UI to show that PMD is running.
+        this.logDebugHeader(targetFile);
+        this.ui.thinking();
 
-        /// Start the console logging with a note on the file being analyzed
-        /// and update the UI to show that PMD is running.
-        this.outputChannel.appendLine(
-            ` ================== Starting PMD+ analysis of ================== \n ================== ${targetFile} ================== `,
-        );
-        UserInterface.getInstance().thinking();
-
-        /// Set up the cancellation token
+        // Set up the cancellation token
         let cancelled = false;
         token?.onCancellationRequested(() => {
             cancelled = true;
         });
 
-        /// Execute PMD and parse the results
+        // Execute PMD and parse the results
         try {
-            const pmdResults = await shellExecutor.executePMDCommand(targetFile, token);
-            const problemsMapByFilename = await csvResultParser.parse(pmdResults);
+            const pmdResults = await this.shellExecutor.executePMDCommand(targetFile, token);
+            const problemsMapByFilename: PmdResults = await this.csvResultParser.parse(pmdResults);
 
             if (problemsMapByFilename.size > 0) {
                 await this.updateUserInterface(problemsMapByFilename, collection, progress, cancelled);
@@ -77,18 +87,40 @@ export class PmdPlus {
         }
     }
 
-    /// private helper methods
+    // private helper methods
 
-    private clearDiagnosticsForFile(targetFile: string, colleection: vscode.DiagnosticCollection): void {
+    private logDebugHeader(targetFile: string): void {
+        this.outputChannel.appendLine(
+            ` ================== Starting PMD+ analysis of ================== \n ================== ${targetFile} ================== `
+        );
+    }
+
+    private async validateConfiguration(): Promise<void> {
+        const [pmdPathIsValid, rulesetsAreValid] = await Promise.all([
+            this.pmdPathIsValid(),
+            this.hasAtLeastOneValidRuleset(),
+        ]);
+
+        if (!pmdPathIsValid || !rulesetsAreValid) {
+            throw new PmdConfigurationError('Invalid configuration');
+        }
+    }
+
+    private clearDiagnosticsForFile(targetFile: string, collection: vscode.DiagnosticCollection): void {
         const fileURI = vscode.Uri.file(targetFile);
-        colleection.delete(fileURI);
+        collection.delete(fileURI);
         UserInterface.getInstance().ok();
     }
 
-    private async updateUserInterface(problemsMapByFilename: Map<string, vscode.Diagnostic[]>, collection: vscode.DiagnosticCollection, progress?: vscode.Progress<{
-        message?: string;
-        increment?: number
-    }>, cancelled?: boolean): Promise<void> {
+    private async updateUserInterface(
+        problemsMapByFilename: Map<string, vscode.Diagnostic[]>,
+        collection: vscode.DiagnosticCollection,
+        progress?: vscode.Progress<{
+            message?: string;
+            increment?: number;
+        }>,
+        cancelled?: boolean
+    ): Promise<void> {
         UserInterface.getInstance().errors();
         progress?.report({ message: `PMD+ is processing ${problemsMapByFilename.size} issues. ` });
         const increment = (1 / problemsMapByFilename.size) * 100;
@@ -109,19 +141,11 @@ export class PmdPlus {
     }
 
     /**
-     * @description This method is responsible for parsing the PMD results into a DiagnosticCollection for VSCode.
-     * @private
-     */
-    private async initializeRulesets(): Promise<void> {
-        this.rulesets = await this.getValidRulesetPaths(this.configuration.rulesets);
-    }
-
-    /**
      * @description Validates the ruleset paths in the configuration object.
      * @param rulesetsToCheck List of strings to check if the file or directory exists.
      * @returns List of valid ruleset paths.
      */
-    private async getValidRulesetPaths(rulesetsToCheck: string[]): Promise<string[]> {
+    private static async getValidRulesetPaths(rulesetsToCheck: string[]): Promise<string[]> {
         const validatedRulesetPaths: string[] = [];
 
         for (const rulesetPath of rulesetsToCheck) {
@@ -156,9 +180,9 @@ export class PmdPlus {
         if (await Utilities.dirExists(this.configuration.pathToPmdExecutable)) {
             return true;
         } else {
-            UserInterface.getInstance().errors();
+            this.ui.errors();
             vscode.window.showErrorMessage(
-                `PMD+ could not find or access the PMD executable at ${this.configuration.pathToPmdExecutable}`,
+                `PMD+ could not find or access the PMD executable at ${this.configuration.pathToPmdExecutable}`
             );
         }
         return false;

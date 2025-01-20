@@ -19,12 +19,13 @@ const diagnosticCollection = vscode.languages.createDiagnosticCollection(extensi
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
     /// Get a handle on the Configuration settings.
     let configuration = new Configuration(context);
 
     /// instance variables
-    const pmdPlus = new PmdPlus(outputChannel, configuration);
+    const pmdPlus: PmdPlus = await PmdPlus.create(outputChannel, configuration);
+        // new PmdPlus(outputChannel, configuration);
     UserInterface.setAppName(extensionName);
     UserInterface.getInstance().ok();
 
