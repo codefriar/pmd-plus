@@ -1,47 +1,101 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { Utilities } from './Utilities';
+import { PmdConfigurationError } from './PmdConfigurationError';
 
 export class Configuration {
     #context: vscode.ExtensionContext;
     #configFromVSCodeSettings: vscode.WorkspaceConfiguration;
 
-    workspacePath: string;
-    rulesets: string[];
-    additionalClassPaths: string[];
-    pathToPmdExecutable: string;
-    enableCache: boolean;
-    cachePath: string;
-    jrePath: string;
-    errorThreshold: number;
-    warnThreshold: number;
-    runPmdOnFileOpen: boolean;
-    runPmdOnFileSave: boolean;
-    runPmdOnFileChange: boolean;
-    onFileChangeDebounceTimeout: number;
-    commandBufferSize: number;
+    readonly workspacePath: string;
+    readonly rulesets: ReadonlyArray<string>;
+    readonly additionalClassPaths: ReadonlyArray<string>;
+    readonly pathToPmdExecutable: string;
+    readonly enableCache: boolean;
+    readonly cachePath: string;
+    readonly jrePath: string;
+    readonly errorThreshold: number;
+    readonly warnThreshold: number;
+    readonly runPmdOnFileOpen: boolean;
+    readonly runPmdOnFileSave: boolean;
+    readonly runPmdOnFileChange: boolean;
+    readonly onFileChangeDebounceTimeout: number;
+    readonly commandBufferSize: number;
 
-    /**
-     * @description Responsible for constructing a Configuration instance with proper configuration.
-     * @param context
-     */
-    constructor(context: vscode.ExtensionContext) {
+    private constructor(
+        context: vscode.ExtensionContext,
+        config: vscode.WorkspaceConfiguration,
+        validatedRulesets: string[]
+    ) {
         this.#context = context;
-        this.#configFromVSCodeSettings = vscode.workspace.getConfiguration('pmdPlus');
+        this.#configFromVSCodeSettings = config;
 
         this.workspacePath = this.#getWorkspacePath();
-        this.rulesets = this.#resolveRulesetPaths();
-        this.additionalClassPaths = this.#resolveAdditionalClassPaths();
+        this.rulesets = Object.freeze(validatedRulesets);
+        this.additionalClassPaths = Object.freeze(this.#resolveAdditionalClassPaths());
         this.pathToPmdExecutable = this.#resolvePathToPmdExecutable();
-        this.enableCache = this.#configFromVSCodeSettings.get('enableCache', true);
+        this.enableCache = config.get('enableCache', true);
         this.cachePath = path.join(this.workspacePath, '.pmdcache');
         this.jrePath = this.#resolveJrePath();
-        this.errorThreshold = this.#configFromVSCodeSettings.get('priorityErrorThreshold', 2);
-        this.warnThreshold = this.#configFromVSCodeSettings.get('priorityWarnThreshold', 4);
-        this.runPmdOnFileOpen = this.#configFromVSCodeSettings.get('runOnFileOpen', true);
-        this.runPmdOnFileSave = this.#configFromVSCodeSettings.get('runOnFileSave', true);
-        this.runPmdOnFileChange = this.#configFromVSCodeSettings.get('runOnFileChange', false);
-        this.onFileChangeDebounceTimeout = this.#configFromVSCodeSettings.get('onFileChangeDebounce', 3000);
-        this.commandBufferSize = this.#configFromVSCodeSettings.get('commandBufferSize', 64);
+        this.errorThreshold = config.get('priorityErrorThreshold', 2);
+        this.warnThreshold = config.get('priorityWarnThreshold', 4);
+        this.runPmdOnFileOpen = config.get('runOnFileOpen', true);
+        this.runPmdOnFileSave = config.get('runOnFileSave', true);
+        this.runPmdOnFileChange = config.get('runOnFileChange', false);
+        this.onFileChangeDebounceTimeout = config.get('onFileChangeDebounce', 3000);
+        this.commandBufferSize = config.get('commandBufferSize', 64);
+    }
+
+    public static async create(context: vscode.ExtensionContext): Promise<Configuration> {
+        const config = vscode.workspace.getConfiguration('pmdPlus');
+        const instance = new Configuration(context, config, await this.validateRulesets(context, config));
+
+        await instance.validate();
+        return instance;
+    }
+
+    private static async validateRulesets(
+        context: vscode.ExtensionContext,
+        config: vscode.WorkspaceConfiguration
+    ): Promise<string[]> {
+        const configuredPaths: string[] = config.get('rulesets', []);
+        const workspacePath = Configuration.getWorkspacePath();
+
+        const resolvedPaths = configuredPaths.map((filePath) => {
+            if (filePath.toLowerCase() === 'default') {
+                return context.asAbsolutePath(path.join('rulesets', 'apex_ruleset.xml'));
+            }
+            return path.isAbsolute(filePath) ? filePath : path.join(workspacePath, filePath);
+        });
+
+        const defaultPath = [path.join(workspacePath, 'rulesets', 'apex_ruleset.xml')];
+        const pathsToCheck = resolvedPaths.length > 0 ? resolvedPaths : defaultPath;
+
+        const validPaths = [];
+        for (const path of pathsToCheck) {
+            if (await Utilities.fileExists(path)) {
+                validPaths.push(path);
+            } else {
+                vscode.window.showErrorMessage(`PMD+ could not find ruleset: ${path}`);
+            }
+        }
+
+        if (validPaths.length === 0) {
+            throw new PmdConfigurationError('No valid rulesets found');
+        }
+
+        return validPaths;
+    }
+
+    private static getWorkspacePath(): string {
+        const workspace = vscode.workspace;
+        return workspace.workspaceFolders?.[0]?.uri.fsPath ?? '';
+    }
+
+    private async validate(): Promise<void> {
+        if (!(await Utilities.dirExists(this.pathToPmdExecutable))) {
+            throw new PmdConfigurationError(`PMD executable not found: ${this.pathToPmdExecutable}`);
+        }
     }
 
     /**
@@ -69,22 +123,7 @@ export class Configuration {
      */
     #resolveAdditionalClassPaths(): string[] {
         const configuredPaths = this.#configFromVSCodeSettings.get('additionalClassPaths', []);
-        return configuredPaths.map(p => path.isAbsolute(p) ? p : path.join(this.workspacePath, p));
-    }
-
-    /**
-     * @description Resolves the ruleset paths.
-     * @private
-     */
-    #resolveRulesetPaths(): string[] {
-        const configuredPaths: string[] = this.#configFromVSCodeSettings.get('rulesets', []);
-        const resolvedPaths = configuredPaths.map(filePath => {
-            if (filePath.toLowerCase() === 'default') {
-                return this.#context.asAbsolutePath(path.join('rulesets', 'apex_ruleset.xml'));
-            }
-            return path.isAbsolute(filePath) ? filePath : path.join(this.workspacePath, filePath);
-        });
-        return resolvedPaths.length > 0 ? resolvedPaths : [path.join(this.workspacePath, 'rulesets', 'apex_ruleset.xml')];
+        return configuredPaths.map((p) => (path.isAbsolute(p) ? p : path.join(this.workspacePath, p)));
     }
 
     /**
