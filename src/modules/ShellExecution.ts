@@ -4,28 +4,24 @@ import * as ChildProcess from 'node:child_process';
 import * as path from 'path';
 import * as os from 'node:os';
 
-const CLASSPATH_DELIMINATOR = process.platform === 'win32' ? ';' : ':';
+const CLASSPATH_DELIMITER = os.platform() === 'win32' ? ';' : ':';
 
 /**
  * @description This class is responsible for executing PMD via the command line.
  * @class ShellExecution
  */
 export class ShellExecution {
-    private readonly configuration: Configuration;
-    private rulesets: string[] = [];
-    private outputChannel: vscode.OutputChannel;
-
     /**
      * @description Responsible for constructing a ShellExecution instance with proper configuration.
-     * @param config Incoming configuration object
-     * @param validRulesets List of valid ruleset paths
+     * @param configuration
+     * @param rulesets
      * @param outputChannel The channel name to use for log output
      */
-    constructor(config: Configuration, validRulesets: string[], outputChannel: vscode.OutputChannel) {
-        this.configuration = config;
-        this.rulesets = validRulesets;
-        this.outputChannel = outputChannel;
-    }
+    constructor(
+        private readonly configuration: Configuration,
+        private readonly rulesets: string[],
+        private readonly outputChannel: vscode.OutputChannel
+    ) {}
 
     /**
      * @description This method is the main entry point for executing PMD via the command line.
@@ -34,49 +30,31 @@ export class ShellExecution {
      * @returns Promise<string>
      */
     public async executePMDCommand(targetFile: string, token?: vscode.CancellationToken): Promise<string> {
-        /// Build the command line arguments into a single string.
+        // Build the command line arguments into a single string.
         const cliCommand = this.buildCommandLine(targetFile);
 
-        /// Setup additional classes, if they are configured.
-        const classPathArgument = this.buildClassPathArgument(
-            this.configuration.workspacePath,
-            this.configuration.additionalClassPaths
-        );
-        let env: NodeJS.ProcessEnv = {};
-        env['CLASSPATH'] = classPathArgument;
+        // Setup additional classes, if they are configured.
+        const classPathArgument = this.buildClassPathArgument();
+        // Setup the environment variables.
+        const env = this.buildEnvironment(classPathArgument);
 
-        /// Set up the JRE, if a custom one is configured.
-        if (this.configuration.jrePath) {
-            if (os.platform() === 'win32') {
-                /// Windows is FSCKED and doesn't handle spaces in paths without quotes.
-                /// I'm not sure how they make money.
-                env['path'] = `"${path.join(this.configuration.jrePath, 'bin')}${path.delimiter}${process.env.PATH}"`;
-            } else {
-                /// real operating systems don't need quotes. Suck it Microsoft.
-                env['PATH'] = `${path.join(this.configuration.jrePath, 'bin')}${path.delimiter}${process.env.PATH}`;
-            }
-        }
+        // Output diagnostics to the output channel. @todo: Wrap this in a configuration setting
+        this.outputDiagnosticsToOutputChannel(cliCommand, env);
 
-        this.outputChannel.appendLine(`Diagnostic Info: Node Version: ${process.version}`);
-        this.outputChannel.appendLine(`Diagnostic Info: Node Env: ${JSON.stringify(env)}`);
-        this.outputChannel.appendLine(`Diagnostic Info: PMD cmd: ${cliCommand}`);
+        token?.onCancellationRequested(() => pmdResults.kill());
 
-        /// Actually execute PMD.
+        // Spin up the JVM in a child process to execute PMD.
         const pmdResults = ChildProcess.exec(cliCommand, {
             env: { ...process.env, ...env },
             maxBuffer: Math.max(this.configuration.commandBufferSize, 1) * 1024 * 1024,
         });
 
-        token &&
-            token.onCancellationRequested(() => {
-                pmdResults.kill();
-            });
-
-        let stdout = '';
-        let stderr = '';
-        /// Return the promise
+        // Return the promise
         return new Promise<string>((resolve, reject) => {
-            /// Reject promise on error
+            let stdout = '';
+            let stderr = '';
+
+            // Reject promise on error
             pmdResults.addListener('error', (err) => {
                 this.outputChannel.appendLine(`PMD+ encountered an error: ${err}`);
                 reject(err);
@@ -113,8 +91,22 @@ export class ShellExecution {
     }
 
     /// Private Helper Methods
+
+    /**
+     * @description This method is responsible for outputting diagnostics to the output channel.
+     * @param cliCommand The command line to execute.
+     * @param env The environment variables to use.
+     * @private
+     */
+    private outputDiagnosticsToOutputChannel(cliCommand: string, env: NodeJS.ProcessEnv): void {
+        this.outputChannel.appendLine(`Diagnostic Info: Node Version: ${process.version}`);
+        this.outputChannel.appendLine(`Diagnostic Info: Node Env: ${JSON.stringify(env)}`);
+        this.outputChannel.appendLine(`Diagnostic Info: PMD cmd: ${cliCommand}`);
+    }
+
     /**
      * @description This method is responsible for building the command line arguments into a single string.
+     * There are more performant ways of generating this string, but I prefert this method, as it's very clear what's happening.
      * @param targetFile The file to run PMD on.
      * @returns string
      */
@@ -141,12 +133,29 @@ export class ShellExecution {
     }
 
     /**
+     * @description This method is responsible for building the environment variables to use.
+     * @param classPathArgument The classpath argument to use.
+     * @private
+     */
+    private buildEnvironment(classPathArgument: string): NodeJS.ProcessEnv {
+        const env: NodeJS.ProcessEnv = { CLASSPATH: classPathArgument };
+
+        if (this.configuration.jrePath) {
+            const jreBinPath = path.join(this.configuration.jrePath, 'bin');
+            env.PATH = os.platform() === 'win32'
+                ? `"${jreBinPath}${path.delimiter}${process.env.PATH}"`
+                : `${jreBinPath}${path.delimiter}${process.env.PATH}`;
+        }
+
+        return env;
+    }
+
+    /**
      * @description This method is responsible for building the classpath argument for the command line.
-     * @param workspacePath The workspace path.
-     * @param additionalClassPaths The additional class paths.
      * @returns string
      */
-    private buildClassPathArgument(workspacePath: string, additionalClassPaths: string[]): string {
-        return [path.join(workspacePath, '*'), ...additionalClassPaths].join(CLASSPATH_DELIMINATOR);
+    private buildClassPathArgument(): string {
+        const { workspacePath, additionalClassPaths } = this.configuration;
+        return [path.join(workspacePath, '*'), ...additionalClassPaths].join(CLASSPATH_DELIMITER);
     }
 }
