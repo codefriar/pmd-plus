@@ -2,14 +2,14 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-/// Custom imports
+// Custom imports
 import { Configuration } from './modules/Configuration';
 import { PmdPlus } from './modules/PmdPlus';
 import { UserInterface } from './modules/UserInterface';
 import { Utilities } from './modules/Utilities';
 import debounce from 'debounce';
 
-/// Extension wide constants
+// Extension wide constants
 const extensionName = 'PMD+';
 const settingsNamespace = 'pmdPlus';
 const supportedLanguages = ['apex', 'visualforce', 'html'];
@@ -22,20 +22,20 @@ const diagnosticCollection = vscode.languages.createDiagnosticCollection(extensi
 export async function activate(context: vscode.ExtensionContext) {
     let configuration = await Configuration.create(context);
 
-    /// instance variables
+    // instance variables
     const pmdPlus: PmdPlus = await PmdPlus.create(outputChannel, context, configuration);
     // new PmdPlus(outputChannel, configuration);
     UserInterface.setAppName(extensionName);
     UserInterface.getInstance().ok();
 
-    /// Register the clear problems command
+    // Register the clear problems command
     context.subscriptions.push(
         vscode.commands.registerCommand('pmd-plus.clearKnownSCAIssues', async () => {
             diagnosticCollection.clear();
         })
     );
 
-    /// Register the Run on Workspace command
+    // Register the Run on Workspace command
     context.subscriptions.push(
         vscode.commands.registerCommand('pmd-plus.SCAWorkspace', async () => {
             vscode.window.withProgress(
@@ -51,14 +51,14 @@ export async function activate(context: vscode.ExtensionContext) {
         })
     );
 
-    /// Register the Run-on File via Menu command
+    // Register the Run-on File via Menu command
     context.subscriptions.push(
         vscode.commands.registerCommand('pmd-plus.SCAFileViaMenu', async (fileURI: vscode.Uri) => {
             await pmdPlus.runPMD(fileURI.fsPath, diagnosticCollection);
         })
     );
 
-    /// Register the Run on File command
+    // Register the Run on File command
     context.subscriptions.push(
         vscode.commands.registerCommand('pmd-plus.SCAFile', async (fileName: string) => {
             const resolvedFileName = fileName ?? vscode.window.activeTextEditor?.document.fileName;
@@ -66,8 +66,8 @@ export async function activate(context: vscode.ExtensionContext) {
         })
     );
 
-    /// Listeners for file events
-    /// File Save Event
+    // Listeners for file events
+    // File Save Event
     if (configuration.runPmdOnFileSave) {
         vscode.workspace.onDidSaveTextDocument(async (document) => {
             if (isLangSupported(document.languageId)) {
@@ -76,7 +76,7 @@ export async function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    /// File changed event
+    // File changed event
     if (configuration.runPmdOnFileChange) {
         vscode.workspace.onDidChangeTextDocument(async () => {
             debounce(async (event: vscode.TextDocumentChangeEvent) => {
@@ -87,7 +87,7 @@ export async function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    /// File Open Event
+    // File Open Event
     if (configuration.runPmdOnFileOpen) {
         vscode.window.onDidChangeActiveTextEditor(async (editor) => {
             if (editor && isLangSupported(editor.document.languageId)) {
@@ -96,14 +96,14 @@ export async function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    /// Configuration change event
+    // Configuration change event
     vscode.workspace.onDidChangeConfiguration(async (event: vscode.ConfigurationChangeEvent) => {
         if (event.affectsConfiguration(settingsNamespace)) {
             configuration = await Configuration.create(context);
         }
     });
 
-    /// Visible editor tab change event
+    // Visible editor tab change event
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor((editor) => {
             if (editor) {
