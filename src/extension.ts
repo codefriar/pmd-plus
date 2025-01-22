@@ -20,6 +20,9 @@ const diagnosticCollection = vscode.languages.createDiagnosticCollection(extensi
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
+    // Set the global context for testing
+    (global as any).testExtensionContext = context;
+
     let configuration = await Configuration.create(context);
 
     // instance variables
