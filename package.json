@@ -30,10 +30,6 @@
         "aura",
         "lwc"
     ],
-    "files": [
-        "out",
-        "resources"
-    ],
     "activationEvents": [
         "workspaceContains:sfdx-project.json",
         "onLanguage:apex",
