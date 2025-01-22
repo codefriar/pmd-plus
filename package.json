@@ -8,6 +8,7 @@
         "name": "Kevin Poorman",
         "email": "codefriar@gmail.com"
     },
+    "icon": "resources/pmdplus.jpg",
     "engines": {
         "vscode": "^1.96.0"
     },
