@@ -1,71 +1,84 @@
-# pmdplus README
+# PMD+
 
-This is the README for your extension "pmdplus". After writing up a brief description, we recommend including the following sections.
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/codefriar.pmd-plus) ![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/codefriar.pmd-plus)](https://marketplace.visualstudio.com/items?itemName=codefriar.pmd-plus)
+[![build](https://github.com/ChuckJonas/vscode-apex-pmd/actions/workflows/build.yml/badge.svg)](https://github.com/ChuckJonas/vscode-apex-pmd/actions/workflows/build.yml)
+
+> Because catching bugs before they catch you (in production), is always a good idea.
+
+A VSCode plugin that brings the power of PMD static code analysis to your favorite IDE. Finally, a way to maintain code quality without leaving your comfort zone!
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Realish-time Analysis**: Catch problems as you type, because waiting for CI/CD to fail is so 2000 and late
+- **Custom Ruleset Support**: Bring your own rules or use the defaults—we definitely judge
+- **Configurable Severity Levels**: From "meh" to "hair on fire"—you decide what matters (again, we judge)
+- **Batteries Included**: Y'all know we be shipping a PMD executable, and a default ruleset. You just need to have Java > 17.0
+- **Problem Window Integration**: All your issues in one place, just to remind you that you're the common denominator in all your problems—including code
+- **Custom Jar Support**: Bring your own custom PMD rules implemented in Java, because no good day ever started with "let's write some java"
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Open VSCode. Contemplate your life choices and grab a cup of coffee while you wait for VSCode to finally launch. 
+2. Go to the Extensions bit.
+3. Search for "PMD+"
+4. Click Install
+6. Start catching bugs like a *boss*
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Configuration
 
-## Requirements
+### Global Settings
+- **PMD Installation**: Point to your PMD installation or let us handle it
+- **Ruleset File**: Choose your ruleset XML file or use ours. (Still judging)
+- **Analysis Trigger**: Configure when analysis runs
+- **Caching**: I can't believe we let you turn caching off.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Usage
 
-## Extension Settings
+### Basic Usage
+1. Open a file
+2. Write some questionable code
+3. Watch the warnings roll in like you let agentforce write your damn code
+4. Fix or ignore them (we recommend fixing, shipping bugs makes Codey cry)
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+### Advanced Features
+- **Custom Rules**: Create your own rules when the defaults just won't cut it
+- **MOAR file types**: Now we support those pesky HTML files you use for LWCs. Sprinkling aura:id's arround like they're Taylor Swift lyrics.
 
-For example:
+## Performance Tips
 
-This extension contributes the following settings:
-
-- `myExtension.enable`: Enable/disable this extension.
-- `myExtension.thing`: Set to `blah` to do something.
+- Use incremental analysis for large projects
+- Configure appropriate cache sizes
+- Don't run all rules if you don't need them (looking at you, copy-paste detection. I mean, no one would copy/pasta stuff everywhere...)
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Sometimes thinks your perfectly valid code is wrong (it's probably right though)
+- It May cause an existential crisis about your coding practices (blame it on your coworkers, we won't git blame you until the trial)
+- It Might make you realize your "temporary" solution from 2 years ago wasn't so temporary
 
-## Release Notes
+## Contributing
 
-Users appreciate release notes as you update your extension.
+Found a bug? Want to add a feature? Have a complaint?
+1. Open an issue (unless it's a complaint)
+2. Fork the repo
+3. Make your changes
+4. Submit a PR
+5. Wait patiently while we judge your code as harshly as PMD judges ours
 
-### 1.0.0
+## Credits
 
-Initial release of ...
+- Original inspiration from [vscode-apex-pmd](https://github.com/ChuckJonas/vscode-apex-pmd)
+- [PMD](https://pmd.github.io/) for giving us the tools to maintain our sanity
+- Coffee, lots of coffee
+- Insomnia due to the loss of my dog Lilo. She was Awesome.
 
-### 1.0.1
+## License
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+MIT License - Because sharing is caring, and lawyers are expensive.
 
 ---
 
-## Following extension guidelines
+Remember: PMD is like your conscience - you can ignore it, but you probably shouldn't.
+Or maybe PMD is like those bumpers that pop up along the gutters of bowling alleys when Kiddos are playing. You know the one's you can totally ignore and force the ball to jump over, but you know, if you try at all, they'll help you not embarrass yourself. 
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-- [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-- Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-- Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Happy bug writing! 🐛
