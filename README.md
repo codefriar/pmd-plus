@@ -5,7 +5,13 @@
 
 > Because catching bugs before they catch you (in production), is always a good idea.
 
-A VSCode plugin that brings the power of PMD static code analysis to your favorite IDE. Finally, a way to maintain code quality without leaving your comfort zone!
+A VSCode plugin that brings the power of PMD static code analysis to your favorite? IDE. Finally, a way to maintain code quality without leaving your comfort zone!
+
+Or, as all the kids be saying:
+
+Fr fr, we all drop some cringe code at some point. This extension is lit for fixing that. Let it be your vibe check to avoid straight-up coding disasters.
+
+> Listen, There's this cool cat named Chuck Jonas, and he's the OG badass in this space. He wrote [Apex-PMD](https://github.com/ChuckJonas/vscode-apex-pmd), and it's pretty ducking awesome. But I needed it to handle HTML files, and was tired of arguing with some cross-platform path bugs with users who were early on the learning curve. So, what's a guy to do? Well, submit a patch, obviously. But wait! Hark there be Typescript. It's a langauge I'm marginally familiar with, so I decided to basically re-write the entire thing and teach myself some better typescript. This isn't a better apex-pmd, or a replacement for Chuck's most excellent work.   
 
 ## Features
 
