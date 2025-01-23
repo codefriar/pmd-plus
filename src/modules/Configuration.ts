@@ -46,7 +46,7 @@ export class Configuration {
         this.runPmdOnFileSave = config.get('runOnFileSave', true);
         this.runPmdOnFileChange = config.get('runOnFileChange', false);
         this.onFileChangeDebounceTimeout = config.get('onFileChangeDebounce', 3000);
-        this.commandBufferSize = config.get('commandBufferSize', 64);
+        this.commandBufferSize = config.get('commandBufferSize') ?? 64;
         this.shadeConfig = config.get('shade') ?? { enabled: false, shadeFiles: {} };
     }
 

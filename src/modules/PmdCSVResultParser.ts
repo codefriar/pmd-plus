@@ -55,7 +55,7 @@ export class PmdCSVResultParser {
 
             for (const result of results) {
                 /// guard against ignored files.
-                if (forceIgnoreFiles.includes(result.file) || result.file.includes('.sfdx')) {
+                if (forceIgnoreFiles?.includes(result.file) || result.file.includes('.sfdx')) {
                     continue;
                 }
 
@@ -132,9 +132,13 @@ export class PmdCSVResultParser {
         const violationOnLine = parseInt(result.line, 10) - 1;
         const problemUrl = this.generateURLToProblemDetails(result);
         const severity = this.calculateLevel(result);
-        const shadeMessage = await this.shadeManager.getShadeMessage(result.file, violationOnLine, severity);
-        const shade = shadeMessage ? ` ${shadeMessage}` : '';
-        const diagnosticMessage = `${shade} - ${result.description} (rule: ${result.rule})`;
+
+        let diagnosticMessage = `${result.description} (rule: ${result.rule})`;
+        if (this.configuration.shadeConfig.enabled) {
+            const shadeMessage = await this.shadeManager.getShadeMessage(result.file, violationOnLine, severity);
+            const shade = shadeMessage ? ` ${shadeMessage}` : '';
+            diagnosticMessage = shade ? `${shade} - ${diagnosticMessage}` : diagnosticMessage;
+        }
 
         const fileURI = vscode.Uri.file(result.file);
         const sourceCodeFile = await vscode.workspace.openTextDocument(fileURI);

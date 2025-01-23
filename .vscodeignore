@@ -3,7 +3,7 @@
 src/**
 .gitignore
 .yarnrc
-bin/
+bin/update.sh
 pmd-packager/target
 pmd-packager/.mvn
 .idea/
