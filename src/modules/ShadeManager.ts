@@ -28,7 +28,7 @@ export class ShadeManager {
 
     private async getLineAuthor(filePath: string, lineNumber: number): Promise<string> {
         return new Promise((resolve) => {
-            exec(`git blame -L ${lineNumber},${lineNumber} ${filePath} --porcelain`, (error, stdout) => {
+            exec(`git blame -L ${lineNumber},${lineNumber} "${filePath}" --porcelain`, (error, stdout) => {
                 if (error) {
                     resolve('');
                     return;
