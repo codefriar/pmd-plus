@@ -1,230 +1,261 @@
 {
-    "name": "pmd-plus",
-    "displayName": "PMD+",
-    "description": "Static Code Analysis for Salesforce Projects' Apex, Visualforce, Aura, and LWC (Html)",
-    "version": "1.0.0",
-    "publisher": "Codefriar",
-    "author": {
-        "name": "Kevin Poorman",
-        "email": "codefriar@gmail.com"
-    },
-    "icon": "resources/pmdplus.jpg",
-    "engines": {
-        "vscode": "^1.96.0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/codefriar/pmd-plus"
-    },
-    "bugs": {
-        "url": "https://github.com/codefriar/pmd-plus/issues"
-    },
-    "categories": [
-        "Linters"
+  "name": "pmd-plus",
+  "displayName": "PMD+",
+  "description": "Static Code Analysis for Salesforce Projects' Apex, Visualforce, Aura, and LWC (Html)",
+  "version": "1.0.0",
+  "publisher": "Codefriar",
+  "author": {
+    "name": "Kevin Poorman",
+    "email": "codefriar@gmail.com"
+  },
+  "icon": "resources/pmdplus.jpg",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codefriar/pmd-plus"
+  },
+  "bugs": {
+    "url": "https://github.com/codefriar/pmd-plus/issues"
+  },
+  "categories": [
+    "Linters"
+  ],
+  "keywords": [
+    "pmd",
+    "salesforce",
+    "apex",
+    "visualforce",
+    "aura",
+    "lwc"
+  ],
+  "activationEvents": [
+    "workspaceContains:sfdx-project.json",
+    "onLanguage:apex",
+    "onLanguage:html",
+    "onLanguage:visualforce"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pmd-plus.SCAWorkspace",
+        "title": "Run Static Code Analysis (pmd) on this Workspace",
+        "category": "PMD+"
+      },
+      {
+        "command": "pmd-plus.SCAFile",
+        "title": "Run Static Code Analysis (pmd) on this File",
+        "category": "PMD+"
+      },
+      {
+        "command": "pmd-plus.clearKnownSCAIssues",
+        "title": "Clear Known Static Code Analysis Issues",
+        "category": "PMD+"
+      },
+      {
+        "command": "pmd-plus.SCAFileViaMenu",
+        "title": "PMD+ Run Static Code Analysis (pmd) on this File",
+        "category": "PMD+"
+      }
     ],
-    "keywords": [
-        "pmd",
-        "salesforce",
-        "apex",
-        "visualforce",
-        "aura",
-        "lwc"
-    ],
-    "activationEvents": [
-        "workspaceContains:sfdx-project.json",
-        "onLanguage:apex",
-        "onLanguage:html",
-        "onLanguage:visualforce"
-    ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "commands": [
-            {
-                "command": "pmd-plus.SCAWorkspace",
-                "title": "Run Static Code Analysis (pmd) on this Workspace",
-                "category": "PMD+"
-            },
-            {
-                "command": "pmd-plus.SCAFile",
-                "title": "Run Static Code Analysis (pmd) on this File",
-                "category": "PMD+"
-            },
-            {
-                "command": "pmd-plus.clearKnownSCAIssues",
-                "title": "Clear Known Static Code Analysis Issues",
-                "category": "PMD+"
-            },
-            {
-                "command": "pmd-plus.SCAFileViaMenu",
-                "title": "PMD+ Run Static Code Analysis (pmd) on this File",
-                "category": "PMD+"
-            }
+    "languages": [
+      {
+        "id": "apex",
+        "aliases": [
+          "Apex"
         ],
-        "languages": [
-            {
-                "id": "apex",
-                "aliases": [
-                    "Apex"
-                ],
-                "extensions": [
-                    ".cls",
-                    ".apxc",
-                    ".trigger"
-                ]
-            },
-            {
-                "id": "visualforce",
-                "aliases": [
-                    "Visualforce",
-                    "VisualForce"
-                ],
-                "extensions": [
-                    ".page",
-                    ".component"
-                ]
-            },
-            {
-                "id": "html",
-                "aliases": [
-                    "Html"
-                ],
-                "extensions": [
-                    ".html",
-                    ".htm"
-                ]
-            }
+        "extensions": [
+          ".cls",
+          ".apxc",
+          ".trigger"
+        ]
+      },
+      {
+        "id": "visualforce",
+        "aliases": [
+          "Visualforce",
+          "VisualForce"
         ],
-        "configuration": {
-            "type": "object",
-            "title": "PMD Plus Configuration",
-            "properties": {
-                "pmdPlus.pathToPmdExecutable": {
-                    "type": "string",
-                    "default": "",
-                    "description": "(Optional) OS Specific formatted path to PMD Binary if you are using your own PMD installation. If blank, PMD Plus will use it's own PMD installation."
-                },
-                "pmdPlus.rulesets": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "default": [],
-                    "description": "(Optional) OS Specific formatted paths to rulesets' xml files. If blank, PMD Plus will use it's own default rulesets."
-                },
-                "pmdPlus.runOnFileOpen": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Do you want to run static analysis on file open? or do you want to ignore the issues your previous self left behind until you save?"
-                },
-                "pmdPlus.runOnFileSave": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Do you want to run static analysis every time a file is saved? If not, have you considered the life choices that have led you to this decision?"
-                },
-                "pmdPlus.runOnFileChange": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Do you want to run static analysis every after a short (configurable) delay every time a file is changed? And if not, why?"
-                },
-                "pmdPlus.onFileChangeDebounce": {
-                    "type": "integer",
-                    "default": 3000,
-                    "description": "The configurable delay between a file being changed, and PMD running. Only used if `runOnFileChange == true`"
-                },
-                "pmdPlus.priorityErrorThreshold": {
-                    "type": "number",
-                    "default": 2,
-                    "description": "Remember, PMD is drunk, and the 'priority' order is inverted. Thus a 1, is a higher priority than a 5. This number determines what PMD violations show up as 'Errors' vs. 'Warnings'."
-                },
-                "pmdPlus.priorityWarnThreshold": {
-                    "type": "number",
-                    "default": 4,
-                    "description": "This is used to determine what priorities from PMD violations will be treated as 'warnings' vs, Errors (see above) and anything with a higher number than this value will be treated as a hint."
-                },
-                "pmdPlus.enableCache": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Caching PMD results makes things faster. Why would you turn this off? I feel like I should make you leave it on in a future version. You're hereby warned."
-                },
-                "pmdPlus.additionalClassPaths": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "default": [],
-                    "description": "(Optional) OS Specific paths to additional '.jar' files that provide additional PMD rules mentioned by your ruleset files. If blank, PMD Plus will use it's own default rules, and any rulesets you've added that reference custom .jar files will fail in spectacular, and arcane ways."
-                },
-                "pmdPlus.commandBufferSize": {
-                    "type": "number",
-                    "default": "64",
-                    "description": "Size of buffer used to collect PMD command output (MB), may need to be increased for very large projects"
-                },
-                "pmdPlus.jrePath": {
-                    "type": "string",
-                    "description": "(Optional) OS Specific path to the folder containing the JRE executable. Useful if you have multiple JREs installed. If blank, PMD Plus will do it's best to negotiate with the OS and find any JRE using the principle of duck typing. (If it looks like a JRE and it responds to Java -version, it's a JRE)"
-                }
-            }
+        "extensions": [
+          ".page",
+          ".component"
+        ]
+      },
+      {
+        "id": "html",
+        "aliases": [
+          "Html"
+        ],
+        "extensions": [
+          ".html",
+          ".htm"
+        ]
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "PMD Plus Configuration",
+      "properties": {
+        "pmdPlus.pathToPmdExecutable": {
+          "type": "string",
+          "default": "",
+          "description": "(Optional) OS Specific formatted path to PMD Binary if you are using your own PMD installation. If blank, PMD Plus will use it's own PMD installation."
         },
-        "menus": {
-            "explorer/context": [
-                {
-                    "when": "resourceLangId == 'apex' || resourceLangId == 'visualforce' || resourceLangId == 'xml' || resourceLangId == 'html'",
-                    "command": "pmd-plus.SCAFileViaMenu",
-                    "group": "pmd-plus"
-                }
-            ],
-            "editor/context": [
-                {
-                    "when": "resourceLangId == 'apex' || resourceLangId == 'visualforce' || resourceLangId == 'xml' || resourceLangId == 'html'",
-                    "command": "pmd-plus.SCAFileViaMenu",
-                    "group": "pmd-plus"
-                }
-            ]
+        "pmdPlus.rulesets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "(Optional) OS Specific formatted paths to rulesets' xml files. If blank, PMD Plus will use it's own default rulesets."
+        },
+        "pmdPlus.runOnFileOpen": {
+          "type": "boolean",
+          "default": true,
+          "description": "Do you want to run static analysis on file open? or do you want to ignore the issues your previous self left behind until you save?"
+        },
+        "pmdPlus.runOnFileSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Do you want to run static analysis every time a file is saved? If not, have you considered the life choices that have led you to this decision?"
+        },
+        "pmdPlus.runOnFileChange": {
+          "type": "boolean",
+          "default": false,
+          "description": "Do you want to run static analysis every after a short (configurable) delay every time a file is changed? And if not, why?"
+        },
+        "pmdPlus.onFileChangeDebounce": {
+          "type": "integer",
+          "default": 3000,
+          "description": "The configurable delay between a file being changed, and PMD running. Only used if `runOnFileChange == true`"
+        },
+        "pmdPlus.priorityErrorThreshold": {
+          "type": "number",
+          "default": 2,
+          "description": "Remember, PMD is drunk, and the 'priority' order is inverted. Thus a 1, is a higher priority than a 5. This number determines what PMD violations show up as 'Errors' vs. 'Warnings'."
+        },
+        "pmdPlus.priorityWarnThreshold": {
+          "type": "number",
+          "default": 4,
+          "description": "This is used to determine what priorities from PMD violations will be treated as 'warnings' vs, Errors (see above) and anything with a higher number than this value will be treated as a hint."
+        },
+        "pmdPlus.enableCache": {
+          "type": "boolean",
+          "default": true,
+          "description": "Caching PMD results makes things faster. Why would you turn this off? I feel like I should make you leave it on in a future version. You're hereby warned."
+        },
+        "pmdPlus.additionalClassPaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "(Optional) OS Specific paths to additional '.jar' files that provide additional PMD rules mentioned by your ruleset files. If blank, PMD Plus will use it's own default rules, and any rulesets you've added that reference custom .jar files will fail in spectacular, and arcane ways."
+        },
+        "pmdPlus.commandBufferSize": {
+          "type": "number",
+          "default": "64",
+          "description": "Size of buffer used to collect PMD command output (MB), may need to be increased for very large projects"
+        },
+        "pmdPlus.jrePath": {
+          "type": "string",
+          "description": "(Optional) OS Specific path to the folder containing the JRE executable. Useful if you have multiple JREs installed. If blank, PMD Plus will do it's best to negotiate with the OS and find any JRE using the principle of duck typing. (If it looks like a JRE and it responds to Java -version, it's a JRE)"
+        },
+        "pmdPlus.shade.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable shade messages"
+        },
+        "pmdPlus.shade.shadeFiles.CodeInsults.json": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable shade messages from CodeInsults.json"
+        },
+        "pmdPlus.shade.shadeFiles.GenAlpha.json": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable shade messages from GenAlpha.json"
+        },
+        "pmdPlus.shade.shadeFiles.General.json": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable shade messages from General.json"
+        },
+        "pmdPlus.shade.shadeFiles.MotherInLaw.json": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable shade messages from MotherInLaw.json"
+        },
+        "pmdPlus.shade.shadeFiles.SouthernInsults.json": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable shade messages from SouthernInsults.json"
         }
+      }
     },
-    "config": {
-        "pmdVersion": "7.9.0"
-    },
-    "scripts": {
-        "postinstall": "pmd-packager/upgrade.sh",
-        "vscode:package": "npx vsce package --allow-star-activation",
-        "vscode:publish": "npx vsce publish",
-        "postversion": "npm run vscode:package && git push --tags && npm run vscode:publish && git push && echo \"Successfully released version $npm_package_version!\"",
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src",
-        "test": "vscode-test",
-        "prettier": "prettier --write \"**/*.{ts,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
-        "prettier:verify": "prettier --list-different \"**/*.{ts,css,html,js,json,md,page,trigger,xml,yaml,yml}\""
-    },
-    "devDependencies": {
-        "@types/debounce": "^1.2.4",
-        "@types/glob": "^8.1.0",
-        "@types/jest": "^29.5.14",
-        "@types/mocha": "^10.0.10",
-        "@types/node": "20.x",
-        "@types/vscode": "^1.96.0",
-        "@typescript-eslint/eslint-plugin": "^8.17.0",
-        "@typescript-eslint/parser": "^8.17.0",
-        "@vscode/test-cli": "^0.0.10",
-        "@vscode/test-electron": "^2.4.1",
-        "cross-env": "^7.0.3",
-        "eslint": "^9.16.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-prettier": "^5.2.1",
-        "glob": "^11.0.1",
-        "jest": "^29.7.0",
-        "mocha": "^11.0.1",
-        "prettier": "^3.4.2",
-        "ts-jest": "^29.2.5",
-        "ts-loader": "^9.5.1",
-        "tslint": "^6.1.3",
-        "typescript": "^5.7.2"
-    },
-    "dependencies": {
-        "csv-parse": "^5.6.0",
-        "debounce": "^2.2.0"
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceLangId == 'apex' || resourceLangId == 'visualforce' || resourceLangId == 'xml' || resourceLangId == 'html'",
+          "command": "pmd-plus.SCAFileViaMenu",
+          "group": "pmd-plus"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceLangId == 'apex' || resourceLangId == 'visualforce' || resourceLangId == 'xml' || resourceLangId == 'html'",
+          "command": "pmd-plus.SCAFileViaMenu",
+          "group": "pmd-plus"
+        }
+      ]
     }
+  },
+  "config": {
+    "pmdVersion": "7.9.0"
+  },
+  "scripts": {
+    "postinstall": "pmd-packager/upgrade.sh",
+    "vscode:package": "npx vsce package --allow-star-activation",
+    "vscode:publish": "npx vsce publish",
+    "postversion": "npm run vscode:package && git push --tags && npm run vscode:publish && git push && echo \"Successfully released version $npm_package_version!\"",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "updateConfig": "node out/modules/updateShadeConfig.js",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "prettier": "prettier --write \"**/*.{ts,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "prettier:verify": "prettier --list-different \"**/*.{ts,css,html,js,json,md,page,trigger,xml,yaml,yml}\""
+  },
+  "devDependencies": {
+    "@types/debounce": "^1.2.4",
+    "@types/glob": "^8.1.0",
+    "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.96.0",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "glob": "^11.0.1",
+    "jest": "^29.7.0",
+    "mocha": "^11.0.1",
+    "prettier": "^3.4.2",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.1",
+    "tslint": "^6.1.3",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "csv-parse": "^5.6.0",
+    "debounce": "^2.2.0"
+  }
 }

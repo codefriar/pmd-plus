@@ -4,6 +4,7 @@ import { Configuration } from './Configuration';
 import * as vscode from 'vscode';
 import { Utilities } from './Utilities';
 import { PmdResult } from '../types';
+import { ShadeManager } from './ShadeManager';
 
 const FIELDS: (keyof PmdResult)[] = [
     'problem',
@@ -23,6 +24,7 @@ const FIELDS: (keyof PmdResult)[] = [
 export class PmdCSVResultParser {
     private outputChannel: vscode.OutputChannel;
     private readonly configuration: Configuration;
+    private readonly shadeManager: ShadeManager;
 
     /**
      * @description Responsible for constructing a PmdCSVResultParser instance with proper configuration.
@@ -32,6 +34,7 @@ export class PmdCSVResultParser {
     constructor(outputChannel: vscode.OutputChannel, configuration: Configuration) {
         this.outputChannel = outputChannel;
         this.configuration = configuration;
+        this.shadeManager = new ShadeManager(configuration);
     }
 
     /**
@@ -128,7 +131,9 @@ export class PmdCSVResultParser {
     private async createDiagnostic(result: PmdResult): Promise<vscode.Diagnostic> {
         const violationOnLine = parseInt(result.line, 10) - 1;
         const problemUrl = this.generateURLToProblemDetails(result);
-        const diagnosticMessage = `${result.description} (rule: ${result.rule})`;
+        const shadeMessage = await this.shadeManager.getShadeMessage(result.file, violationOnLine);
+        const shade = shadeMessage ? ` ${shadeMessage}` : '';
+        const diagnosticMessage = `${shade} - ${result.description} (rule: ${result.rule})`;
 
         const fileURI = vscode.Uri.file(result.file);
         const sourceCodeFile = await vscode.workspace.openTextDocument(fileURI);
@@ -136,9 +141,8 @@ export class PmdCSVResultParser {
 
         const problem = new vscode.Diagnostic(
             new vscode.Range(
-                new vscode.Position(lineContents.range.start.line, lineContents.firstNonWhitespaceCharacterIndex), lineContents.range.end
-                // the next line was the original code.
-                // new vscode.Position(violationOnLine, 0), new vscode.Position(violationOnLine, 100)
+                new vscode.Position(lineContents.range.start.line, lineContents.firstNonWhitespaceCharacterIndex),
+                lineContents.range.end
             ),
             diagnosticMessage,
             this.calculateLevel(result)

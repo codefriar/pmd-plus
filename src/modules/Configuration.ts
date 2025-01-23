@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { Utilities } from './Utilities';
 import { PmdConfigurationError } from './PmdConfigurationError';
+import { ShadeConfig } from './ShadeConfig';
 
 export class Configuration {
     private context: vscode.ExtensionContext;
@@ -21,6 +22,8 @@ export class Configuration {
     readonly runPmdOnFileChange: boolean;
     readonly onFileChangeDebounceTimeout: number;
     readonly commandBufferSize: number;
+    readonly shadeConfig: ShadeConfig;
+    public extensionInstallationPath = () => this.context.asAbsolutePath('.');
 
     private constructor(
         context: vscode.ExtensionContext,
@@ -44,6 +47,7 @@ export class Configuration {
         this.runPmdOnFileChange = config.get('runOnFileChange', false);
         this.onFileChangeDebounceTimeout = config.get('onFileChangeDebounce', 3000);
         this.commandBufferSize = config.get('commandBufferSize', 64);
+        this.shadeConfig = config.get('shade') ?? { enabled: false, shadeFiles: {} };
     }
 
     public static async create(context: vscode.ExtensionContext): Promise<Configuration> {

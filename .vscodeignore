@@ -3,6 +3,13 @@
 src/**
 .gitignore
 .yarnrc
+bin/
+pmd-packager/target
+pmd-packager/.mvn
+.idea/
+.pmdcache
+.prettierignore
+node_modules/
 vsc-extension-quickstart.md
 **/tsconfig.json
 **/eslint.config.mjs
