@@ -11,6 +11,7 @@ pmd-packager/.mvn
 .prettierignore
 node_modules/
 !node_modules/csv-parse
+!node_modules/debounce
 vsc-extension-quickstart.md
 **/tsconfig.json
 **/eslint.config.mjs
