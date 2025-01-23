@@ -10,6 +10,7 @@ pmd-packager/.mvn
 .pmdcache
 .prettierignore
 node_modules/
+!node_modules/csv-parse
 vsc-extension-quickstart.md
 **/tsconfig.json
 **/eslint.config.mjs
