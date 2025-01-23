@@ -2,7 +2,7 @@
   "name": "pmd-plus",
   "displayName": "PMD+",
   "description": "Static Code Analysis for Salesforce Projects' Apex, Visualforce, Aura, and LWC (Html)",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "publisher": "Codefriar",
   "author": {
     "name": "Kevin Poorman",
