@@ -1,0 +1,204 @@
+{
+  "insults": [
+    {
+      "severity": 5,
+      "shade": "Oh, that's how you format your code? How... interesting"
+    },
+    {
+      "severity": 4,
+      "shade": "I suppose that's one way to write a function"
+    },
+    {
+      "severity": 5,
+      "shade": "Your last commit was... creative"
+    },
+    {
+      "severity": 3,
+      "shade": "When I was coding, we actually tested our code before pushing"
+    },
+    {
+      "severity": 4,
+      "shade": "I'm sure there's a reason you chose that variable name"
+    },
+    {
+      "severity": 5,
+      "shade": "Well, not everyone can write elegant code"
+    },
+    {
+      "severity": 3,
+      "shade": "My friend's daughter writes the most beautiful code"
+    },
+    {
+      "severity": 4,
+      "shade": "I suppose documentation is optional these days"
+    },
+    {
+      "severity": 2,
+      "shade": "I'm just worried about the codebase's future, dear"
+    },
+    {
+      "severity": 4,
+      "shade": "Oh, you're still using that framework?"
+    },
+    {
+      "severity": 3,
+      "shade": "I remember when developers took pride in their work"
+    },
+    {
+      "severity": 5,
+      "shade": "That's a very... modern way of doing things"
+    },
+    {
+      "severity": 2,
+      "shade": "I just want what's best for the project, unlike some people"
+    },
+    {
+      "severity": 4,
+      "shade": "Your coding style is certainly... unique"
+    },
+    {
+      "severity": 3,
+      "shade": "I assumed you'd have more experience by now"
+    },
+    {
+      "severity": 4,
+      "shade": "Oh, you're doing it that way? How brave"
+    },
+    {
+      "severity": 2,
+      "shade": "I suppose standards have changed since my day"
+    },
+    {
+      "severity": 5,
+      "shade": "Well, at least you tried something different"
+    },
+    {
+      "severity": 3,
+      "shade": "Not everyone can handle writing clean code"
+    },
+    {
+      "severity": 4,
+      "shade": "That's an... interesting choice of architecture"
+    },
+    {
+      "severity": 2,
+      "shade": "I'm not angry, I'm just disappointed in this codebase"
+    },
+    {
+      "severity": 4,
+      "shade": "Oh, you're still using those libraries?"
+    },
+    {
+      "severity": 3,
+      "shade": "When my son codes, he always remembers to comment"
+    },
+    {
+      "severity": 5,
+      "shade": "I suppose we all have different standards"
+    },
+    {
+      "severity": 2,
+      "shade": "I just hope you know what you're doing, dear"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code certainly has... character"
+    },
+    {
+      "severity": 3,
+      "shade": "I remember when developers actually used design patterns"
+    },
+    {
+      "severity": 4,
+      "shade": "Well, that's one approach to error handling"
+    },
+    {
+      "severity": 2,
+      "shade": "I worry about your coding future, dear"
+    },
+    {
+      "severity": 5,
+      "shade": "Not everyone can write efficient code"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code reminds me of your father's attempts"
+    },
+    {
+      "severity": 4,
+      "shade": "Oh, you're not going to refactor that?"
+    },
+    {
+      "severity": 2,
+      "shade": "I just want you to reach your full potential"
+    },
+    {
+      "severity": 4,
+      "shade": "That's a very... personal coding style"
+    },
+    {
+      "severity": 3,
+      "shade": "My neighbor's son writes such maintainable code"
+    },
+    {
+      "severity": 5,
+      "shade": "Well, everyone has their own way of doing things"
+    },
+    {
+      "severity": 2,
+      "shade": "I suppose quality isn't a priority anymore"
+    },
+    {
+      "severity": 4,
+      "shade": "Oh, you learned coding from bootcamp?"
+    },
+    {
+      "severity": 3,
+      "shade": "Back in my day, we cared about performance"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code is certainly... different"
+    },
+    {
+      "severity": 2,
+      "shade": "I just hope the next developer can understand this"
+    },
+    {
+      "severity": 5,
+      "shade": "Not everyone thinks about scalability"
+    },
+    {
+      "severity": 3,
+      "shade": "My book club friend's daughter writes such elegant algorithms"
+    },
+    {
+      "severity": 4,
+      "shade": "Oh, you're happy with that solution?"
+    },
+    {
+      "severity": 2,
+      "shade": "I worry about the company's future with code like this"
+    },
+    {
+      "severity": 1,
+      "shade": "I suppose we can't all write code like my first child"
+    },
+    {
+      "severity": 1,
+      "shade": "Maybe programming just isn't your calling, dear"
+    },
+    {
+      "severity": 1,
+      "shade": "I knew I should have insisted on reviewing your PRs"
+    },
+    {
+      "severity": 1,
+      "shade": "This explains why you're still in that position"
+    },
+    {
+      "severity": 1,
+      "shade": "Now I understand why they outsourced your team's work"
+    }
+  ]
+}

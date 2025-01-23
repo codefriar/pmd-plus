@@ -1,0 +1,204 @@
+{
+  "insults": [
+    {
+      "severity": 1,
+      "shade": "If your code was a restaurant, Gordon Ramsay would be calling it an idiot sandwich"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code's like my ex - high maintenance, poorly structured, and impossible to understand"
+    },
+    {
+      "severity": 1, 
+      "shade": "Your codebase is the programming equivalent of a gas station sushi buffet"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code's so bad, it makes JavaScript look like a strongly typed language"
+    },
+    {
+      "severity": 1,
+      "shade": "I've seen better organized systems in a raccoon's trash collection"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code is like my career - a series of questionable decisions held together by Stack Overflow"
+    },
+    {
+      "severity": 2,
+      "shade": "Your Git history looks like a conspiracy theorist's bulletin board"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's more circular than my arguments with my mother"
+    },
+    {
+      "severity": 2,
+      "shade": "You debug like my dad tries to fix the WiFi - turn it off and on again"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code review process is like my dating life - lots of red flags being ignored"
+    },
+    {
+      "severity": 2,
+      "shade": "Your function names are longer than my list of failed relationships"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's so messy it makes my apartment look like a Marie Kondo seminar"
+    },
+    {
+      "severity": 2,
+      "shade": "Your deployment strategy is like my diet - cheat days are the norm"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code comments are like my therapy sessions - expensive and ineffective"
+    },
+    {
+      "severity": 2,
+      "shade": "Your error handling is like my love life - expecting the worst, still disappointed"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code's giving my anxiety medication anxiety"
+    },
+    {
+      "severity": 3,
+      "shade": "Your PR is like my bank account - lots of withdrawals, no deposits"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code's more defensive than my ex at a family dinner"
+    },
+    {
+      "severity": 3,
+      "shade": "Your variable names are like my attempts at cooking - confusing and dangerous"
+    },
+    {
+      "severity": 3,
+      "shade": "Your test coverage is like my workout routine - mostly aspirational"
+    },
+    {
+      "severity": 3,
+      "shade": "Your documentation's like my memoir - nobody's reading it"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code style's more inconsistent than my Netflix watching habits"
+    },
+    {
+      "severity": 3,
+      "shade": "Your commit messages are like my texts to my ex - short and regrettable"
+    },
+    {
+      "severity": 3,
+      "shade": "Your sprint planning's more optimistic than my New Year's resolutions"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code reviews are like my stand-up sets - brief and painful"
+    },
+    {
+      "severity": 4,
+      "shade": "Your dependencies are like my exes - outdated and causing problems"
+    },
+    {
+      "severity": 4,
+      "shade": "Your programming style's like my fashion sense - stuck in the wrong decade"
+    },
+    {
+      "severity": 4,
+      "shade": "Your database queries are slower than my comeback to a heckler"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code's more nested than my family's dysfunction"
+    },
+    {
+      "severity": 4,
+      "shade": "Your bug fixes are like my attempts at parallel parking - making things worse"
+    },
+    {
+      "severity": 4,
+      "shade": "Your coding standards are like my standards in dating - surprisingly low"
+    },
+    {
+      "severity": 4,
+      "shade": "Your merge strategy's like my financial planning - hope for the best"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code's more bloated than my post-holiday weight"
+    },
+    {
+      "severity": 4,
+      "shade": "Your API's more unstable than my first marriage"
+    },
+    {
+      "severity": 4,
+      "shade": "Your technical debt's bigger than my student loans"
+    },
+    {
+      "severity": 5,
+      "shade": "Your code review comments are like my dad's disappointment - implied but clear"
+    },
+    {
+      "severity": 5,
+      "shade": "Your testing strategy's like my retirement plan - I hope it works out"
+    },
+    {
+      "severity": 5,
+      "shade": "Your code formatting's like my apartment - a work in progress"
+    },
+    {
+      "severity": 5,
+      "shade": "Your refactoring's like my attempts at yoga - painful to watch"
+    },
+    {
+      "severity": 5,
+      "shade": "Your version control's like my love life - lots of conflicts"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code's so bad it makes my divorce lawyer look ethical"
+    },
+    {
+      "severity": 1,
+      "shade": "Your codebase is what happens when imposter syndrome is justified"
+    },
+    {
+      "severity": 1,
+      "shade": "Your programming skills make bootcamp dropouts look like Linus Torvalds"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code review made my therapist prescribe stronger medication"
+    },
+    {
+      "severity": 1,
+      "shade": "Your debugging strategy's like my dating history - trying the same thing and expecting different results"
+    },
+    {
+      "severity": 5,
+      "shade": "Your code quality metrics are like my self-esteem - needs work"
+    },
+    {
+      "severity": 5,
+      "shade": "Your CI pipeline's like my gym membership - not working out"
+    },
+    {
+      "severity": 5,
+      "shade": "Your release schedule's like my diet - always cheat days"
+    },
+    {
+      "severity": 5,
+      "shade": "Your code comments are like my Twitter followers - sparse and fake"
+    },
+    {
+      "severity": 5,
+      "shade": "Your feature branches are like my career path - meandering and confused"
+    }
+  ]
+}

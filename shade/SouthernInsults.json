@@ -1,0 +1,216 @@
+{
+  "insults": [
+    {
+      "severity": 5,
+      "shade": "Bless your heart"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code's about as organized as a tornado in a trailer park"
+    },
+    {
+      "severity": 5,
+      "shade": "You're about as useful as a screen door on a submarine"
+    },
+    {
+      "severity": 3,
+      "shade": "That code won't compile"
+    },
+    {
+      "severity": 4,
+      "shade": "Your documentation's about as helpful as instructions on a boot heel"
+    },
+    {
+      "severity": 5,
+      "shade": "Bless your little cotton socks"
+    },
+    {
+      "severity": 3,
+      "shade": "Not the sharpest compiler in the IDE"
+    },
+    {
+      "severity": 4,
+      "shade": "Your git history's about as clean as a mud-wrestlin' pig"
+    },
+    {
+      "severity": 2,
+      "shade": "If brains were leather, you couldn't saddle a junebug"
+    },
+    {
+      "severity": 4,
+      "shade": "Well, isn't that special"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code's about as smooth as a corn cob"
+    },
+    {
+      "severity": 5,
+      "shade": "Might wanna rethink that PR, sugar"
+    },
+    {
+      "severity": 2,
+      "shade": "Your codebase looks like a squirrel's nest in a hurricane"
+    },
+    {
+      "severity": 4,
+      "shade": "Your commit messages are just like your mama's - bless her heart"
+    },
+    {
+      "severity": 3,
+      "shade": "Your debugging skills are about as sharp as a penny in a mud puddle"
+    },
+    {
+      "severity": 4,
+      "shade": "Well, ain't that something"
+    },
+    {
+      "severity": 2,
+      "shade": "If your code was dynamite, you couldn't blow your nose"
+    },
+    {
+      "severity": 5,
+      "shade": "Oh honey, who told you that nested ternary was a good idea?"
+    },
+    {
+      "severity": 3,
+      "shade": "Your test coverage is about as useful as tits on a bull"
+    },
+    {
+      "severity": 4,
+      "shade": "Bless your heart, you're trying"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code review skills are about as sharp as a marshmallow"
+    },
+    {
+      "severity": 4,
+      "shade": "Well, God loves your code anyway"
+    },
+    {
+      "severity": 3,
+      "shade": "Your refactoring's about as graceful as a cow on roller skates"
+    },
+    {
+      "severity": 5,
+      "shade": "Did your mama raise you to write spaghetti code?"
+    },
+    {
+      "severity": 2,
+      "shade": "Doesn't have enough sense to comment their code"
+    },
+    {
+      "severity": 4,
+      "shade": "Bless your heart, you can't help it"
+    },
+    {
+      "severity": 3,
+      "shade": "Your algorithmic complexity is about as efficient as molasses in January"
+    },
+    {
+      "severity": 4,
+      "shade": "You're just tired, aren't you, sugar?"
+    },
+    {
+      "severity": 2,
+      "shade": "If ignorance is bliss, your code must be paradise"
+    },
+    {
+      "severity": 5,
+      "shade": "Oh sweetie, no"
+    },
+    {
+      "severity": 3,
+      "shade": "Your error handling's about as useful as a pocketful of firecrackers in a rainstorm"
+    },
+    {
+      "severity": 4,
+      "shade": "Well, isn't that interesting"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code optimization's about as effective as a chocolate teapot"
+    },
+    {
+      "severity": 4,
+      "shade": "You're just special, aren't you?"
+    },
+    {
+      "severity": 3,
+      "shade": "Your variable naming's clearer than mud, but just barely"
+    },
+    {
+      "severity": 5,
+      "shade": "Oh, you poor thing"
+    },
+    {
+      "severity": 2,
+      "shade": "All syntax and no logic"
+    },
+    {
+      "severity": 4,
+      "shade": "Well, you sure are trying hard"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code's about as organized as a raccoon's garage sale"
+    },
+    {
+      "severity": 4,
+      "shade": "Bless your heart, you mean well"
+    },
+    {
+      "severity": 2,
+      "shade": "The compiler's running but the logic's dead"
+    },
+    {
+      "severity": 5,
+      "shade": "Oh honey, that's not how we format our code"
+    },
+    {
+      "severity": 3,
+      "shade": "Your documentation's about as clear as a sundial at midnight"
+    },
+    {
+      "severity": 4,
+      "shade": "Well, somebody's mentor didn't teach them better"
+    },
+    {
+      "severity": 2,
+      "shade": "You're about as sharp as a sack of wet mice"
+    },
+    {
+      "severity": 4,
+      "shade": "Bless your sweet little heart"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code reviews are just a few cards short of a full deck"
+    },
+    {
+      "severity": 5,
+      "shade": "Oh darlin', you tried"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code's so bad it makes COBOL look modern"
+    },
+    {
+      "severity": 1,
+      "shade": "If I had a dollar for every anti-pattern in your code, I'd be richer than Bill Gates"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code belongs in a museum of horrors"
+    },
+    {
+      "severity": 1,
+      "shade": "I've seen better code written by a cat walking across a keyboard"
+    },
+    {
+      "severity": 1,
+      "shade": "Calling your code a dumpster fire would be an insult to dumpsters"
+    }
+  ]
+}

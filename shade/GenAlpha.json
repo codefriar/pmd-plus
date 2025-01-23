@@ -1,0 +1,204 @@
+{
+  "insults": [
+    {
+      "severity": 5,
+      "shade": "Main character energy, but make it a flop"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code's giving undefined behavior bestie"
+    },
+    {
+      "severity": 5,
+      "shade": "Not me finding a bug in your PR 💀"
+    },
+    {
+      "severity": 3,
+      "shade": "This commit history? No thoughts, head empty"
+    },
+    {
+      "severity": 4,
+      "shade": "Your function's giving pick me vibes"
+    },
+    {
+      "severity": 5,
+      "shade": "Not the bare minimum git commit messages"
+    },
+    {
+      "severity": 3,
+      "shade": "Skill issue + ratio + L + malloc failed"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code's been ghosting the style guide fr fr"
+    },
+    {
+      "severity": 2,
+      "shade": "This codebase is about to make me act unwise fr"
+    },
+    {
+      "severity": 4,
+      "shade": "Based on what? Your lack of unit tests?"
+    },
+    {
+      "severity": 3,
+      "shade": "Not you treating errors like they're optional 💀"
+    },
+    {
+      "severity": 5,
+      "shade": "This PR is giving imposter syndrome"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's been real quiet since the QA dropped"
+    },
+    {
+      "severity": 4,
+      "shade": "POV: you forgot to handle edge cases again"
+    },
+    {
+      "severity": 3,
+      "shade": "It's giving spaghetti code energy"
+    },
+    {
+      "severity": 4,
+      "shade": "No cap, this function's bussin (derogatory)"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code really said 'we move' and crashed"
+    },
+    {
+      "severity": 5,
+      "shade": "Not the npm audit throwing shade"
+    },
+    {
+      "severity": 3,
+      "shade": "Why your code built different (it's broken)"
+    },
+    {
+      "severity": 4,
+      "shade": "Living for this stack overflow bestie"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's about to make me catch these hands fr"
+    },
+    {
+      "severity": 4,
+      "shade": "This ain't it chief, respectfully"
+    },
+    {
+      "severity": 3,
+      "shade": "Your PR is down bad expeditiously"
+    },
+    {
+      "severity": 5,
+      "shade": "Not the copy-paste from Stack Overflow"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's giving red flags bestie"
+    },
+    {
+      "severity": 4,
+      "shade": "Did your IDE pick this format? No because wtf"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code really said 'yeet' to best practices"
+    },
+    {
+      "severity": 4,
+      "shade": "This merge conflict's living rent free in my head"
+    },
+    {
+      "severity": 2,
+      "shade": "Homie really chose violence with this commit"
+    },
+    {
+      "severity": 5,
+      "shade": "It's giving bootcamp graduate energy"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code's a whole mood (depression)"
+    },
+    {
+      "severity": 4,
+      "shade": "Not you gatekeeping good programming practices"
+    },
+    {
+      "severity": 2,
+      "shade": "This function's giving major toxic vibes"
+    },
+    {
+      "severity": 4,
+      "shade": "I know you didn't just push to main"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code's been real quiet since CI dropped"
+    },
+    {
+      "severity": 5,
+      "shade": "Bestie, this ain't the slay you think it is"
+    },
+    {
+      "severity": 2,
+      "shade": "Not the runtime error in prod, I'm weak 💀"
+    },
+    {
+      "severity": 4,
+      "shade": "This PR is basically a villain origin story"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code said 'no thoughts just vibes'"
+    },
+    {
+      "severity": 4,
+      "shade": "Not you dropping these bugs in prod fr fr"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's giving second-hand embarrassment"
+    },
+    {
+      "severity": 5,
+      "shade": "It's the lack of comments for me"
+    },
+    {
+      "severity": 3,
+      "shade": "Your function's giving mid energy"
+    },
+    {
+      "severity": 4,
+      "shade": "This code review is so extra rn"
+    },
+    {
+      "severity": 2,
+      "shade": "Touch grass (after fixing these bugs)"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code's more toxic than a League of Legends lobby fr fr"
+    },
+    {
+      "severity": 1,
+      "shade": "Bro's code got ratioed by the compiler 💀"
+    },
+    {
+      "severity": 1,
+      "shade": "Dead ahh wrote this while streaming Fortnite"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code's the reason developers need therapy"
+    },
+    {
+      "severity": 1,
+      "shade": "Not you thinking this would pass code review, I'm deceased 💀"
+    }
+  ]
+}

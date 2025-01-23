@@ -1,0 +1,204 @@
+{
+  "insults": [
+    {
+      "severity": 1,
+      "shade": "Your code's so bad it makes Windows ME look stable"
+    },
+    {
+      "severity": 1,
+      "shade": "I've seen better architecture decisions in a game of Jenga"
+    },
+    {
+      "severity": 1,
+      "shade": "Your codebase is what happens when Stack Overflow throws up"
+    },
+    {
+      "severity": 1,
+      "shade": "You code like you're being paid per bug"
+    },
+    {
+      "severity": 1,
+      "shade": "Your Git history looks like a crime scene investigation"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code coverage is lower than your dating standards"
+    },
+    {
+      "severity": 2,
+      "shade": "Your variable names sound like someone fell asleep on the keyboard"
+    },
+    {
+      "severity": 2,
+      "shade": "Your PR makes PHP look well-designed"
+    },
+    {
+      "severity": 2,
+      "shade": "Even Microsoft's paperclip would reject your code"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's so bad it violates the Geneva Convention"
+    },
+    {
+      "severity": 2,
+      "shade": "You've got 99 problems and efficient algorithms ain't one of them"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's so dirty it needs SOAP... and not the protocol kind"
+    },
+    {
+      "severity": 2,
+      "shade": "Your error handling is more exceptional than your coding skills"
+    },
+    {
+      "severity": 2,
+      "shade": "Your code's making legacy COBOL developers look like innovators"
+    },
+    {
+      "severity": 2,
+      "shade": "Your commit messages are shorter than your attention span"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code optimization is about as effective as a chocolate teapot"
+    },
+    {
+      "severity": 3,
+      "shade": "Your database queries are slower than a sloth on sedatives"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code comments read like drunk tweets"
+    },
+    {
+      "severity": 3,
+      "shade": "Your function names sound like they came from a random word generator"
+    },
+    {
+      "severity": 3,
+      "shade": "Your merge conflicts are more toxic than your gaming chat history"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code review skills are more missing than your semicolons"
+    },
+    {
+      "severity": 3,
+      "shade": "You deploy to production like you're playing Russian roulette"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code's more tightly coupled than a reality TV marriage"
+    },
+    {
+      "severity": 3,
+      "shade": "Your debugging strategy is just 'pray and console.log'"
+    },
+    {
+      "severity": 3,
+      "shade": "Your code's giving technical debt collectors job security"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code structure's more chaotic than a toddler's crayon masterpiece"
+    },
+    {
+      "severity": 4,
+      "shade": "Your type checking is more optional than your deadlines"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code's less DRY than the Sahara Desert"
+    },
+    {
+      "severity": 4,
+      "shade": "Your test suite's more incomplete than your documentation"
+    },
+    {
+      "severity": 4,
+      "shade": "Your API design's more inconsistent than your coding style"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code reviews are shorter than your coffee breaks"
+    },
+    {
+      "severity": 4,
+      "shade": "Your branching strategy's more complex than your relationship status"
+    },
+    {
+      "severity": 4,
+      "shade": "Your code's more brittle than your ego"
+    },
+    {
+      "severity": 4,
+      "shade": "Your CI pipeline's more broken than your promises to refactor"
+    },
+    {
+      "severity": 4,
+      "shade": "Your dependency tree's bigger than your imposter syndrome"
+    },
+    {
+      "severity": 5,
+      "shade": "You've got more deprecated dependencies than working features"
+    },
+    {
+      "severity": 5,
+      "shade": "Your code style's more inconsistent than your commit schedule"
+    },
+    {
+      "severity": 5,
+      "shade": "Your PR descriptions are vaguer than your career goals"
+    },
+    {
+      "severity": 5,
+      "shade": "Your logic's more circular than your project deadlines"
+    },
+    {
+      "severity": 5,
+      "shade": "Your code quality's dropping faster than your production database"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code's so bad it makes brainfuck look user-friendly"
+    },
+    {
+      "severity": 1,
+      "shade": "You write code like you're trying to create job security through obscurity"
+    },
+    {
+      "severity": 1,
+      "shade": "Your codebase is what developers show their kids to scare them straight"
+    },
+    {
+      "severity": 1,
+      "shade": "Your code's more dangerous than letting a random number generator do brain surgery"
+    },
+    {
+      "severity": 1,
+      "shade": "You code like you're being charged by the efficiency"
+    },
+    {
+      "severity": 5,
+      "shade": "Your version control strategy's more chaotic than your desktop icons"
+    },
+    {
+      "severity": 5,
+      "shade": "Your code reviews are as shallow as your git knowledge"
+    },
+    {
+      "severity": 5,
+      "shade": "Your test coverage is more sparse than your documentation"
+    },
+    {
+      "severity": 5,
+      "shade": "Your release schedule's more random than your variable naming"
+    },
+    {
+      "severity": 5,
+      "shade": "Your sprint planning's more optimistic than your runtime estimates"
+    }
+  ]
+}
