@@ -3,6 +3,7 @@ import * as path from 'path';
 import { exec } from 'child_process';
 import { ShadeConfig, Shade } from './ShadeConfig';
 import { Configuration } from './Configuration';
+import * as vscode from 'vscode';
 
 export class ShadeManager {
     private readonly configuration: Configuration;
@@ -47,7 +48,7 @@ export class ShadeManager {
         });
     }
 
-    async getShadeMessage(filePath: string, lineNumber: number): Promise<string> {
+    async getShadeMessage(filePath: string, lineNumber: number, severity: vscode.DiagnosticSeverity): Promise<string> {
         if (!this.shadeConfig.enabled) {
             return '';
         }
@@ -56,19 +57,21 @@ export class ShadeManager {
         const currentUser = await this.getCurrentGitUser();
 
         if (author === currentUser) {
-            return this.getRandomInsult('general.json');
+            return this.getRandomInsult('general.json', severity);
         }
 
-        return this.getRandomInsultFromEnabled();
+        return this.getRandomInsultFromEnabled(severity);
     }
 
-    private getRandomInsult(fileName: string): string {
+    private getRandomInsult(fileName: string, severity: vscode.DiagnosticSeverity): string {
         const insults = this.shadeCache.get(fileName) || [];
-        const selectedInsult: Shade = insults[Math.floor(Math.random() * insults.length)] ?? '';
+        // insult severity is 1 indexed, vscode.DiagnosticSeverity is 0 indexed.
+        const withMatchingSeverity = insults.filter((insult) => insult.severity === severity + 1) ?? [];
+        const selectedInsult: Shade = withMatchingSeverity[Math.floor(Math.random() * withMatchingSeverity.length)] ?? '';
         return selectedInsult.shade;
     }
 
-    private getRandomInsultFromEnabled(): string {
+    private getRandomInsultFromEnabled(severity: vscode.DiagnosticSeverity): string {
         const enabledFiles = Object.entries(this.shadeConfig.shadeFiles)
             .filter(([_, enabled]) => enabled)
             .map(([file]) => file);
@@ -78,6 +81,6 @@ export class ShadeManager {
         }
 
         const randomFile = enabledFiles[Math.floor(Math.random() * enabledFiles.length)];
-        return this.getRandomInsult(randomFile + '.json');
+        return this.getRandomInsult(randomFile + '.json', severity);
     }
 }

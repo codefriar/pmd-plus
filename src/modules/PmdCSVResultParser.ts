@@ -131,7 +131,8 @@ export class PmdCSVResultParser {
     private async createDiagnostic(result: PmdResult): Promise<vscode.Diagnostic> {
         const violationOnLine = parseInt(result.line, 10) - 1;
         const problemUrl = this.generateURLToProblemDetails(result);
-        const shadeMessage = await this.shadeManager.getShadeMessage(result.file, violationOnLine);
+        const severity = this.calculateLevel(result);
+        const shadeMessage = await this.shadeManager.getShadeMessage(result.file, violationOnLine, severity);
         const shade = shadeMessage ? ` ${shadeMessage}` : '';
         const diagnosticMessage = `${shade} - ${result.description} (rule: ${result.rule})`;
 
@@ -145,7 +146,7 @@ export class PmdCSVResultParser {
                 lineContents.range.end
             ),
             diagnosticMessage,
-            this.calculateLevel(result)
+            severity
         );
         problem.code = {
             value: result.rule,
