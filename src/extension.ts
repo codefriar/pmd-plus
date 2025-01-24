@@ -102,6 +102,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // Configuration change event
     vscode.workspace.onDidChangeConfiguration(async (event: vscode.ConfigurationChangeEvent) => {
         if (event.affectsConfiguration(settingsNamespace)) {
+            console.log('PMD+ is reloading its configuration');
             configuration = await Configuration.create(context);
         }
     });

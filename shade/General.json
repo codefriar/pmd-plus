@@ -199,6 +199,42 @@
     {
       "severity": 5,
       "shade": "Your feature branches are like my career path - meandering and confused"
+    },
+    {
+      "severity": 3,
+      "shade": "I have neither the time nor the crayons to explain this to you"
+    },
+    {
+      "severity": 4,
+      "shade": "You've got 2 brain cells both fighting for 3rd place"
+    },
+    {
+      "severity": 3,
+      "shade": "It seems you are committed to keeping your IQ at room temperature"
+    },
+    {
+      "severity": 4,
+      "shade": "Anybody who told you just be yourself, couldn't have given you worse advice"
+    },
+    {
+      "severity": 3,
+      "shade": "If stupid were a flower, you'd be spring"
+    },
+    {
+      "severity": 2,
+      "shade": "Why are you here, and what can I do about that?"
+    },
+    {
+      "severity": 2,
+      "shade": "You are the practice pancake"
+    },
+    {
+      "severity": 4,
+      "shade": "You couldn't dump water out of a boot if the instructions were on a heel"
+    },
+    {
+      "severity": 3,
+      "shade": "I'm jealous of people who don't know you"
     }
   ]
 }
