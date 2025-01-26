@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/codefriar/pmd-plus/compare/v1.1.5...v1.2.0) (2025-01-26)
+
+
+### Features
+
+* **shade:** new insults ([b9bef2b](https://github.com/codefriar/pmd-plus/commit/b9bef2bb0150d6324170548477df50f01840e41b))
+* **shade:** new insults ([2e3f19e](https://github.com/codefriar/pmd-plus/commit/2e3f19ed4c505f9ec021533188c121b1470eed32))
+* **shade:** new insults ([0b65096](https://github.com/codefriar/pmd-plus/commit/0b65096ccb0e956b21d690cc14cb909e770a6b16))
+
 ### [1.1.5](https://github.com/codefriar/pmd-plus/compare/v1.1.4...v1.1.5) (2025-01-23)
 
 
