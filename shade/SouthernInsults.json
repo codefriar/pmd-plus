@@ -29,6 +29,26 @@
       "shade": "Not the sharpest compiler in the IDE"
     },
     {
+      "severity": 3,
+      "shade": "Your family tree's a wreath, isn't it?"
+    },
+    {
+      "severity": 2,
+      "shade": "You're only cultured in that you've got bacteria"
+    },
+    {
+      "severity": 1,
+      "shade": "You've never had a library card, have you?"
+    },
+    {
+      "severity": 4,
+      "shade": "You owe your grandma money don't you"
+    },
+    {
+      "severity": 1,
+      "shade": "As an outsider, what are your views on human intelligence?"
+    },
+    {
       "severity": 4,
       "shade": "Your git history's about as clean as a mud-wrestlin' pig"
     },

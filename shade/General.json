@@ -209,8 +209,24 @@
       "shade": "You've got 2 brain cells both fighting for 3rd place"
     },
     {
+      "severity": 2,
+      "shade": "Nothing brightens up a codebase so much as your absence"
+    },
+    {
       "severity": 3,
       "shade": "It seems you are committed to keeping your IQ at room temperature"
+    },
+    {
+      "severity": 2,
+      "shade": "You had a teacher all to yourself, didn't you?"
+    },
+    {
+      "severity": 2,
+      "shade": "There are 2 programming mistakes that piss me off, and this code shows all 3 of them."
+    },
+    {
+      "severity": 2,
+      "shade": "They say the 2 hardest things in programming are naming things, cache invalidation, and off-by-1 errors. Thanks for making it 4."
     },
     {
       "severity": 4,
